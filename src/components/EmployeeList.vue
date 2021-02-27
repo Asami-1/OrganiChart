@@ -14,6 +14,7 @@
   </div>
 </template>
 <script>
+//TODO : fix affichage bouton
 /* eslint-disable */ function AddEmployee() {}
 export default {
   name: 'EmployeeList',
