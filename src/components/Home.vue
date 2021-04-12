@@ -2,11 +2,10 @@
 <template>
   <div id="home">
     <h2>Firebase data :</h2>
-    <h1>{{ firebaseData }}</h1>
+    {{ services }}
     <h1>{{ tempNbPosts }}</h1>
 
     <router-link to="Statistiques"> Statistiques</router-link>
-    <button @click="getStoreInfo"></button>
   </div>
 </template>
 
@@ -20,18 +19,106 @@ export default {
 
   data() {
     return {
-      firebaseData: null,
-      tempNbPosts: 0,
+      employees: null,
+      services: null,
     };
   },
 
   firestore() {
     return {
-      firebaseData: db.collection('salaries'),
+      employees: db.collection('/Employees'),
+      services: db.collection('/Services'),
     };
   },
 
   methods: {
+    // Firestore methods
+
+    /**
+     * create an employee
+     */
+    createEmployee(
+      isCandidate = undefined,
+      name,
+      surname,
+      postName = undefined,
+      status = 0
+    ) {
+      db.collection('/Employees')
+        .add({
+          isCandidate: isCandidate,
+          name: name,
+          postId: undefined,
+          postName: postName,
+          service: undefined,
+          serviceId: undefined,
+          status: status,
+          surname: surname,
+        })
+        .then(() => {
+          console.log('Employee successfully added!');
+        })
+        .catch((error) => {
+          console.error('Error saving employee: ', error);
+        });
+    },
+    /**
+     * deletes an Employee
+     */
+    deleteEmployee(employeeID) {
+      db.collection('/Employees')
+        .doc(employeeID)
+        .delete()
+        .then(() => {
+          console.log('Employee successfully deleted!');
+        })
+        .catch((error) => {
+          console.error('Error removing document: ', error);
+        });
+    },
+    //TODO Retrieve the lowest service level and set the created one's to retrievedLevel + 1
+    /**
+     * creates a service
+     */
+    createService(serviceLevel = 1, serviceName) {
+      db.collection('/Services')
+        .doc(serviceName)
+        .set({
+          serviceLevel: serviceLevel,
+          serviceName: serviceName,
+        })
+        .then(() => {
+          console.log('Service successfully added!');
+        })
+        .catch((error) => {
+          console.error('Error saving Service: ', error);
+        });
+    },
+
+    //TODO implement it
+    /**
+     * create an employee
+     */
+    // createPost(postLevel = 1, postName) {
+    //   db.collection('/Posts')
+    //     .add({
+    //       isCandidate: isCandidate,
+    //       name: name,
+    //       postId: undefined,
+    //       postName: postName,
+    //       service: undefined,
+    //       serviceId: undefined,
+    //       status: status,
+    //       surname: surname,
+    //     })
+    //     .then(() => {
+    //       console.log('Employee successfully added!');
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error saving employee: ', error);
+    //     });
+    // },
+
     /**
      * Shows store info on the console
      */
