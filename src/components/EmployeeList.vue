@@ -20,12 +20,11 @@
         :employee-id="employee.employeeId"
         :employee-name="employee.name"
         :employee-surname="employee.surname"
-      />
+      />    
     </div>
-    <!-- 
     <div class="list-bottom">
       <button class="Add" v-on:click="AddEmployee()">+</button>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -106,7 +105,6 @@ export default {
   }
 
   &-center {
-    overflow: hidden;
     flex-direction: column;
     display: flex;
     align-items: center;
@@ -114,19 +112,23 @@ export default {
     top: 20%;
     height: 75%;
     width: 100%;
+    overflow-y: scroll;
   }
   &-bottom {
-    height: 20%;
-    width: 100%;
+  .Add{
+    height: 5%;
+    width: 5%;
     position: fixed;
-    bottom: 10px;
-    border-radius: 50%;
+    bottom: 40px;
+    right:130px;
+    border-radius: 100px;
     background-color: #ffffff;
     border: 1px solid black;
-    font-size: 120%;
-    &:focus {
+    font-size: 200%;
+       &:focus {
       transform: scale(1.05);
     }
+  }
   }
 
   input {
