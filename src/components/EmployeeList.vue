@@ -23,14 +23,8 @@
         :employee-post="employee.postName"
       />
     </div>
-    <div class="list-bottom">
-      <button
-        @click="AddEmployee()"
-        type="button"
-        class="btn btn-light list-bottom-add"
-      >
-        Ajouter un employé
-      </button>
+    <div class="list-bottom" id="example-2">
+      <button class="list-bottom-add" v-on:click="AddEmployee('hi')">+</button>
     </div>
   </div>
 </template>
@@ -40,9 +34,11 @@
 import { db } from '../firebase';
 import 'firebase/firestore';
 import EmployeeCard from './EmployeeCard';
+import Vue from 'vue';
+import VueSimpleAlert from 'vue-simple-alert';
 
-//TODO : fix affichage bouton
-/* eslint-disable */ function AddEmployee() {}
+Vue.use(VueSimpleAlert);
+/* eslint-disable */
 export default {
   name: 'EmployeeList',
 
@@ -59,11 +55,20 @@ export default {
       services: db.collection('/Services'),
     };
   },
-  methods: {},
+  methods: {
+    AddEmployee: function (msg) {
+      this.$prompt('Ajouter un employé').then((text) => {
+        // do somthing with text
+      });
+    },
+  },
   components: {
     EmployeeCard,
   },
 };
+function AddEmployee() {
+  this.$alert('Hello Vue Simple Alert.');
+}
 </script>
 <style lang="scss" scoped>
 .list {
@@ -126,14 +131,14 @@ export default {
     width: 100%;
     bottom: 0%;
     &-add {
-      // height: 5%;
-      // width: 5%;
-      // position: fixed;
-      // bottom: 40px;
-      // right: 130px;
-      // border-radius: 100px;
-      // background-color: #ffffff;
-      // border: 1px solid black;
+      height: 5%;
+      width: 5%;
+      position: fixed;
+      bottom: 40px;
+      right: 130px;
+      border-radius: 100px;
+      background-color: #ffffff;
+      border: 1px solid black;
       &:focus {
         transform: scale(1.05);
       }
