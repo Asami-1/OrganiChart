@@ -20,10 +20,17 @@
         :employee-id="employee.employeeId"
         :employee-name="employee.name"
         :employee-surname="employee.surname"
-      />    
+        :employee-post="employee.postName"
+      />
     </div>
     <div class="list-bottom">
-      <button class="Add" v-on:click="AddEmployee()">+</button>
+      <button
+        @click="AddEmployee()"
+        type="button"
+        class="btn btn-light list-bottom-add"
+      >
+        Ajouter un employé
+      </button>
     </div>
   </div>
 </template>
@@ -69,15 +76,16 @@ export default {
   z-index: 1000;
   border-radius: 4% 0% 0% 4%;
   border: 1px solid black;
+
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
+  flex-wrap: wrap;
 
   &-header {
     width: 100%;
-    height: 10%;
     top: 0px;
+    height: 10%;
     display: inline-flex;
     position: absolute;
     justify-content: center;
@@ -87,7 +95,6 @@ export default {
       height: 80%;
       background-color: #ffffff;
       display: inline-flex;
-      top: 10px;
       position: absolute;
       border-radius: 15%;
       justify-content: center;
@@ -105,30 +112,32 @@ export default {
   }
 
   &-center {
+    margin-top: 30%;
     flex-direction: column;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 20%;
-    height: 75%;
+    height: 80%;
     width: 100%;
     overflow-y: scroll;
   }
   &-bottom {
-  .Add{
-    height: 5%;
-    width: 5%;
-    position: fixed;
-    bottom: 40px;
-    right:130px;
-    border-radius: 100px;
-    background-color: #ffffff;
-    border: 1px solid black;
-    font-size: 200%;
-       &:focus {
-      transform: scale(1.05);
+    height: 10%;
+    width: 100%;
+    bottom: 0%;
+    &-add {
+      // height: 5%;
+      // width: 5%;
+      // position: fixed;
+      // bottom: 40px;
+      // right: 130px;
+      // border-radius: 100px;
+      // background-color: #ffffff;
+      // border: 1px solid black;
+      &:focus {
+        transform: scale(1.05);
+      }
     }
-  }
   }
 
   input {
