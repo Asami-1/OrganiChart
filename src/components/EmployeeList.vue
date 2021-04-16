@@ -22,8 +22,8 @@
         :employee-surname="employee.surname"
       />    
     </div>
-    <div class="list-bottom">
-      <button class="Add" v-on:click="AddEmployee()">+</button>
+    <div class="list-bottom" id="example-2">
+      <button class="Add" v-on:click="AddEmployee('hi')">+</button>
     </div>
   </div>
 </template>
@@ -33,9 +33,11 @@
 import { db } from '../firebase';
 import 'firebase/firestore';
 import EmployeeCard from './EmployeeCard';
-
-//TODO : fix affichage bouton
-/* eslint-disable */ function AddEmployee() {}
+import Vue from "vue";
+import VueSimpleAlert from "vue-simple-alert";
+ 
+Vue.use(VueSimpleAlert);
+/* eslint-disable */
 export default {
   name: 'EmployeeList',
 
@@ -52,11 +54,20 @@ export default {
       services: db.collection('/Services'),
     };
   },
-  methods: {},
+  methods: {
+      AddEmployee: function (msg) {
+      this.$prompt("Ajouter un employé").then(text => {
+  // do somthing with text
+});
+    }
+  },
   components: {
     EmployeeCard,
   },
 };
+function AddEmployee() {
+  this.$alert("Hello Vue Simple Alert.");
+}
 </script>
 <style lang="scss" scoped>
 .list {
