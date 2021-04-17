@@ -26,10 +26,10 @@
       <!-- </ul> -->
     </div>
     <div class="list-bottom">
-      <button class="list-bottom-add" v-on:click="AddEmployee('hi')">+</button>
+      <button class="list-bottom-add" v-on:click="AddEmployee()">+</button>
     </div>
   </div>
-</template>²
+</template>
 
 
 <script>
@@ -109,11 +109,13 @@ function AddEmployee() {
 
   &-header {
     width: 100%;
-    top: 0px;
+    top: 0%;
     height: 10%;
     display: inline-flex;
     position: absolute;
     justify-content: center;
+    z-index:100;
+    padding-bottom:2em;
 
     &-inside {
       width: 80%;
@@ -124,7 +126,7 @@ function AddEmployee() {
       border-radius: 15%;
       justify-content: center;
       font-weight: bold;
-      padding: 3%;
+      padding: 4%;
       border: 1px solid black;
       overflow: hidden;
     }
@@ -138,37 +140,31 @@ function AddEmployee() {
 
   &-center {
     flex-direction: column;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     overflow-y: scroll;
     margin-top: 30%;
-    height: 80%;
+    height: 70%;
     width: 100%;
-    // &-employees {
-    //   overflow-y: scroll;
-
-    // }
+    padding-top:2em;
   }
   &-bottom {
-    height: 10%;
+    height: 7%;
     width: 100%;
-    bottom: 0%;
     display: flex;
     justify-content: center;
     &-add {
-      margin-top: 5%;
-      margin-bottom: 5%;
-
-      height: 7%;
-      width: 30%;
-      position: absolute;
-      font-size: 3.5vw;
-
-      border-radius: 100px;
-      background-color: #ffffff;
+      margin-top: 0.5rem;
+      margin-bottom: 2rem;
+      padding:1rem;
+      height: 4rem;
+      width: 5rem;
+      font-size: 2em;
+      border-radius: 3em;
       border: 1px solid black;
+      background-color: #ffffff;
       &:focus {
-        transform: scale(1.05);
+        transform: scale(1.15);
       }
     }
   }
