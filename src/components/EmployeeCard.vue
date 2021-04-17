@@ -42,7 +42,11 @@ export default {
     /**
      * deletes an Employee
      */
-    deleteEmployee() {},
+    deleteEmployee() {
+      this.$confirm("Retirer l'employé de la liste?").then(() => {
+
+});
+    },
   },
   props: {
     employeeId: {
