@@ -40,7 +40,11 @@ export default {
                 status: status,
                 surname: surname,
             })
-            .then(() => {
+            .then((employee) => {
+                console.log(employee.id, employee.path);
+                db.doc(employee.path).update({
+                    employeeId: employee.id,
+                });
                 console.log('Employee successfully added!');
             })
             .catch((error) => {
@@ -51,6 +55,7 @@ export default {
      * deletes an Employee
      */
     deleteEmployee(employeeID) {
+        console.log(employeeID);
         db.collection('/Employees')
             .doc(employeeID)
             .delete()

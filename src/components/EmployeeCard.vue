@@ -31,8 +31,8 @@
 </template>
 
 <script>
-// import VueSimpleAlert from 'vue-simple-alert';
-// import api from '../api';
+import VueSimpleAlert from 'vue-simple-alert';
+import api from '../api';
 export default {
   name: 'employeeCard',
   data() {
@@ -42,7 +42,14 @@ export default {
     /**
      * deletes an Employee
      */
-    deleteEmployee() {},
+    async deleteEmployee() {
+      await VueSimpleAlert.confirm(
+        'Êtes-vous sûr de vouloir supprimer cet employé ?'
+      ).then(() => {
+        api.deleteEmployee(this.employeeId);
+        console.log('Employee deleted');
+      });
+    },
   },
   props: {
     employeeId: {

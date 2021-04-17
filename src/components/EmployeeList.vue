@@ -59,7 +59,7 @@ export default {
     };
   },
   methods: {
-    async AddEmployee(msg) {
+    async AddEmployee() {
       let data = {};
       data = await VueSimpleAlert.fire({
         title: 'Ajouter un employé',
