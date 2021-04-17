@@ -23,20 +23,20 @@ export default {
      * create an employee
      */
     createEmployee(
-        isCandidate = undefined,
+        isCandidate = false,
         name,
         surname,
-        postName = undefined,
+        postName = null,
         status = 0
     ) {
         db.collection('/Employees')
             .add({
                 isCandidate: isCandidate,
                 name: name,
-                postId: undefined,
+                postId: null,
                 postName: postName,
-                service: undefined,
-                serviceId: undefined,
+                service: null,
+                serviceId: null,
                 status: status,
                 surname: surname,
             })
@@ -51,16 +51,15 @@ export default {
      * deletes an Employee
      */
     deleteEmployee(employeeID) {
-        console.log(employeeID);
-        // db.collection('/Employees')
-        //     .doc(employeeID)
-        //     .delete()
-        //     .then(() => {
-        //         console.log('Employee successfully deleted!');
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error removing document: ', error);
-        //     });
+        db.collection('/Employees')
+            .doc(employeeID)
+            .delete()
+            .then(() => {
+                console.log('Employee successfully deleted!');
+            })
+            .catch((error) => {
+                console.error('Error removing document: ', error);
+            });
     },
     //TODO Retrieve the lowest service level and set the created one's to retrievedLevel + 1
     /**

@@ -14,6 +14,7 @@
     </div>
 
     <div class="list-center">
+      <!-- <ul class="list-center-employees"> -->
       <EmployeeCard
         v-for="employee in employees"
         :key="employee.employeeId"
@@ -22,12 +23,13 @@
         :employee-surname="employee.surname"
         :employee-post="employee.postName"
       />
+      <!-- </ul> -->
     </div>
-    <div class="list-bottom" id="example-2">
+    <div class="list-bottom">
       <button class="list-bottom-add" v-on:click="AddEmployee('hi')">+</button>
     </div>
   </div>
-</template>
+</template>²
 
 
 <script>
@@ -36,6 +38,7 @@ import 'firebase/firestore';
 import EmployeeCard from './EmployeeCard';
 import Vue from 'vue';
 import VueSimpleAlert from 'vue-simple-alert';
+import api from '../api';
 
 Vue.use(VueSimpleAlert);
 /* eslint-disable */
@@ -56,10 +59,26 @@ export default {
     };
   },
   methods: {
-    AddEmployee: function (msg) {
-      this.$prompt('Ajouter un employé').then((text) => {
-        // do somthing with text
+    async AddEmployee(msg) {
+      let data = {};
+      data = await VueSimpleAlert.fire({
+        title: 'Ajouter un employé',
+        text: 'Nom',
+        showCancelButton: true,
+        html:
+          '<input id="swal-input1" class="swal2-input" placeholder="Nom">' +
+          '<input id="swal-input2" class="swal2-input" placeholder="Prénom">',
+
+        preConfirm: () => {
+          return {
+            name: `${document.getElementById('swal-input1').value}`,
+            surname: `${document.getElementById('swal-input2').value}`,
+          };
+        },
       });
+      data = data.value;
+      console.log(data.surname);
+      api.createEmployee(false, data.name, data.surname);
     },
   },
   components: {
@@ -86,6 +105,7 @@ function AddEmployee() {
   justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
+  overflow: hidden;
 
   &-header {
     width: 100%;
@@ -117,25 +137,33 @@ function AddEmployee() {
   }
 
   &-center {
-    margin-top: 30%;
     flex-direction: column;
     display: flex;
     align-items: center;
-    justify-content: center;
+    overflow-y: scroll;
+    margin-top: 30%;
     height: 80%;
     width: 100%;
-    overflow-y: scroll;
+    // &-employees {
+    //   overflow-y: scroll;
+
+    // }
   }
   &-bottom {
     height: 10%;
     width: 100%;
     bottom: 0%;
+    display: flex;
+    justify-content: center;
     &-add {
-      height: 5%;
-      width: 5%;
-      position: fixed;
-      bottom: 40px;
-      right: 130px;
+      margin-top: 5%;
+      margin-bottom: 5%;
+
+      height: 7%;
+      width: 30%;
+      position: absolute;
+      font-size: 3.5vw;
+
       border-radius: 100px;
       background-color: #ffffff;
       border: 1px solid black;

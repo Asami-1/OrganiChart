@@ -32,7 +32,7 @@
 
 <script>
 // import VueSimpleAlert from 'vue-simple-alert';
-import api from '../api';
+// import api from '../api';
 export default {
   name: 'employeeCard',
   data() {
@@ -42,14 +42,11 @@ export default {
     /**
      * deletes an Employee
      */
-    deleteEmployee() {
-      console.log(this.employeeId);
-      api.deleteEmployee(this.employeeId);
-    },
+    deleteEmployee() {},
   },
   props: {
     employeeId: {
-      type: Number,
+      type: String,
     },
 
     employeeName: {
@@ -63,8 +60,6 @@ export default {
     employeePost: {
       type: String,
     },
-
-    //TODO Ajouter le nom du taf du salarié
   },
 };
 </script>
@@ -79,7 +74,6 @@ export default {
   border: 1px solid black;
   border-radius: 10px;
   position: relative;
-  top: 11530px;
   display: flex;
   flex-direction: row;
 
