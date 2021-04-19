@@ -4,11 +4,7 @@
       <div class="list-header-inside">
         Employés
         <div class="list-header-searchBar">
-          <input
-            type="text"
-            v-model="search"
-            placeholder="Recherher un employé ..."
-          />
+          <SearchBar @update="updateSearchedEmployees"></SearchBar>
         </div>
       </div>
     </div>
@@ -16,7 +12,7 @@
     <div class="list-center">
       <!-- <ul class="list-center-employees"> -->
       <EmployeeCard
-        v-for="employee in employees"
+        v-for="employee in filteredEmployees"
         :key="employee.employeeId"
         :employee-id="employee.employeeId"
         :employee-name="employee.name"
@@ -39,6 +35,7 @@ import EmployeeCard from './EmployeeCard';
 import Vue from 'vue';
 import VueSimpleAlert from 'vue-simple-alert';
 import api from '../api';
+import SearchBar from './SearchBar';
 
 Vue.use(VueSimpleAlert);
 /* eslint-disable */
@@ -47,8 +44,9 @@ export default {
 
   data() {
     return {
-      employees: null,
-      services: null,
+      employees: [],
+      services: [],
+      searchedEmployees: '',
     };
   },
 
@@ -58,7 +56,12 @@ export default {
       services: db.collection('/Services'),
     };
   },
+
   methods: {
+    updateSearchedEmployees(search) {
+      this.searchedEmployees = search;
+    },
+
     async AddEmployee() {
       let data = {};
       data = await VueSimpleAlert.fire({
@@ -81,8 +84,30 @@ export default {
       api.createEmployee(false, data.name, data.surname);
     },
   },
+
+  computed: {
+    filteredEmployees() {
+      return this.employees.filter((employee) => {
+        let name = employee.name;
+        let surname = employee.surname;
+        let research = this.searchedEmployees;
+        let containsName = research.toLowerCase().includes(name.toLowerCase());
+        let containsSurname = research
+          .toLowerCase()
+          .includes(surname.toLowerCase());
+        if (research === '') {
+          return true;
+        }
+        if ((containsName || containsSurname) && research.includes(' ')) {
+          return containsName && containsSurname;
+        }
+        return containsName || containsSurname;
+      });
+    },
+  },
   components: {
     EmployeeCard,
+    SearchBar,
   },
 };
 function AddEmployee() {
@@ -114,12 +139,13 @@ function AddEmployee() {
     display: inline-flex;
     position: absolute;
     justify-content: center;
-    z-index:100;
-    padding-bottom:2em;
+    z-index: 100;
+    padding-bottom: 2em;
 
     &-inside {
-      width: 80%;
-      height: 80%;
+      top: 8%;
+      width: 73%;
+      height: 69%;
       background-color: #ffffff;
       display: inline-flex;
       position: absolute;
@@ -146,7 +172,7 @@ function AddEmployee() {
     margin-top: 30%;
     height: 70%;
     width: 100%;
-    padding-top:2em;
+    padding-top: 2em;
   }
   &-bottom {
     height: 7%;
@@ -156,7 +182,7 @@ function AddEmployee() {
     &-add {
       margin-top: 0.5rem;
       margin-bottom: 2rem;
-      padding:1rem;
+      padding: 1rem;
       height: 4rem;
       width: 5rem;
       font-size: 2em;
