@@ -82,6 +82,7 @@ export default {
   border-radius: 10px;
   position: relative;
   display: flex;
+  font-size:130%;
   flex-direction: row;
 
   &-left {
