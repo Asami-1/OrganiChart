@@ -1,11 +1,16 @@
 <template>
   <div :style="employeeColor" class="card">
-    <div class="card-left">
+      <div class="card-left">
+        <button :style="'background:green'" id="color" v-on:click="changeColor()"></button>
+        <button :style="'background:orange'" id="color" v-on:click="changeColor()"></button>
+        <button :style="'background:red'" id="color" v-on:click="changeColor()"></button>
+      </div>
+      <div class="card-center">
       <span>{{ this.employeeSurname }}</span>
       <br />
       <span>{{ this.employeeName }}</span>
       <br />
-      <span class="card-left-post">{{ this.employeePost }}</span>
+      <span class="card-center-post">{{ this.employeePost }}</span>
     </div>
     <div @click="deleteEmployee" class="card-right">
       <svg
@@ -35,12 +40,14 @@ import VueSimpleAlert from 'vue-simple-alert';
 import api from '../api';
 export default {
   name: 'employeeCard',
-  data() {},
+  data() {
+    return {};
+  },
   methods: {
-    changeColor(color) {
-      api.updateEmployee();
+    /* eslint-disable */
+      changeColor() {
     },
-    /**
+        /**
      * deletes an Employee
      */
     async deleteEmployee() {
@@ -52,7 +59,7 @@ export default {
       });
     },
   },
-
+  
   computed: {
     employeeColor() {
       var bgColor = '';
@@ -70,8 +77,11 @@ export default {
   },
 
   props: {
-    employeeStatus: {
+    color:{
       type: String,
+    },
+       employeeStatus: {
+      type: Number,
     },
     employeeId: {
       type: String,
@@ -95,7 +105,6 @@ export default {
 <style lang="scss" scoped>
 .card {
   width: 80%;
-  height: 10%;
   padding: 1vw;
   background-color: white;
   margin-top: 5%;
@@ -105,9 +114,17 @@ export default {
   display: flex;
   font-size:130%;
   flex-direction: row;
-
-  &-left {
-    width: 80%;
+  
+  &-left{
+    position:absolute;
+    left:0.1em;
+    top:0em;
+    height:100;
+    width:5%;
+  }
+  
+  &-center {
+    width: 100%;
     font-size: 0.7em;
     &-post {
       font-size: 0.6em;
@@ -130,4 +147,8 @@ export default {
     }
   }
 }
+#color{
+      border-radius: 1em;
+      height:1em;
+   }
 </style>
