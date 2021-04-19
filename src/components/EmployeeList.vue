@@ -18,6 +18,7 @@
         :employee-name="employee.name"
         :employee-surname="employee.surname"
         :employee-post="employee.postName"
+        :employee-status="employee.status"
       />
       <!-- </ul> -->
     </div>

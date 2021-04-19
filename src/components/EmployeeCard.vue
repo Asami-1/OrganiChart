@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div :style="employeeColor" class="card">
     <div class="card-left">
       <span>{{ this.employeeSurname }}</span>
       <br />
@@ -35,10 +35,11 @@ import VueSimpleAlert from 'vue-simple-alert';
 import api from '../api';
 export default {
   name: 'employeeCard',
-  data() {
-    return {};
-  },
+  data() {},
   methods: {
+    changeColor(color) {
+      api.updateEmployee();
+    },
     /**
      * deletes an Employee
      */
@@ -51,7 +52,27 @@ export default {
       });
     },
   },
+
+  computed: {
+    employeeColor() {
+      var bgColor = '';
+      if (this.employeeStatus == '0') {
+        bgColor = '#FFFAF0';
+      } else if (this.employeeStatus == '1') {
+        bgColor = '#7FFF00';
+      } else if (this.employeeStatus == '2') {
+        bgColor = '#FF8C00';
+      } else if (this.employeeStatus == '3') {
+        bgColor = '#F08080';
+      }
+      return { 'background-color': bgColor };
+    },
+  },
+
   props: {
+    employeeStatus: {
+      type: String,
+    },
     employeeId: {
       type: String,
     },
