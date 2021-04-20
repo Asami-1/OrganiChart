@@ -1,11 +1,23 @@
 <template>
   <div :style="employeeColor" class="card">
-      <div class="card-left">
-        <button :style="'background:green'" id="color" v-on:click="changeColor()"></button>
-        <button :style="'background:orange'" id="color" v-on:click="changeColor()"></button>
-        <button :style="'background:red'" id="color" v-on:click="changeColor()"></button>
-      </div>
-      <div class="card-center">
+    <div class="card-left">
+      <button
+        :style="'background:green'"
+        id="color"
+        v-on:click="changeColor(1)"
+      ></button>
+      <button
+        :style="'background:orange'"
+        id="color"
+        v-on:click="changeColor(2)"
+      ></button>
+      <button
+        :style="'background:red'"
+        id="color"
+        v-on:click="changeColor(3)"
+      ></button>
+    </div>
+    <div class="card-center">
       <span>{{ this.employeeSurname }}</span>
       <br />
       <span>{{ this.employeeName }}</span>
@@ -45,9 +57,11 @@ export default {
   },
   methods: {
     /* eslint-disable */
-      changeColor() {
+    changeColor(status) {
+      let data = { status: status };
+      api.updateEmployee(this.employeeId, data);
     },
-        /**
+    /**
      * deletes an Employee
      */
     async deleteEmployee() {
@@ -59,7 +73,7 @@ export default {
       });
     },
   },
-  
+
   computed: {
     employeeColor() {
       var bgColor = '';
@@ -77,10 +91,10 @@ export default {
   },
 
   props: {
-    color:{
+    color: {
       type: String,
     },
-       employeeStatus: {
+    employeeStatus: {
       type: Number,
     },
     employeeId: {
@@ -112,17 +126,17 @@ export default {
   border-radius: 10px;
   position: relative;
   display: flex;
-  font-size:130%;
+  font-size: 130%;
   flex-direction: row;
-  
-  &-left{
-    position:absolute;
-    left:0.1em;
-    top:0em;
-    height:100;
-    width:5%;
+
+  &-left {
+    position: absolute;
+    left: 0.1em;
+    top: 0em;
+    height: 100;
+    width: 5%;
   }
-  
+
   &-center {
     width: 100%;
     font-size: 0.7em;
@@ -147,8 +161,8 @@ export default {
     }
   }
 }
-#color{
-      border-radius: 1em;
-      height:1em;
-   }
+#color {
+  border-radius: 1em;
+  height: 1em;
+}
 </style>
