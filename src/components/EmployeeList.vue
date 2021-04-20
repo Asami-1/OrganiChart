@@ -111,9 +111,6 @@ export default {
     SearchBar,
   },
 };
-function AddEmployee() {
-  this.$alert('Hello Vue Simple Alert.');
-}
 </script>
 <style lang="scss" scoped>
 .list {

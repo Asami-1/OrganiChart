@@ -69,7 +69,6 @@ export default {
         'Êtes-vous sûr de vouloir supprimer cet employé ?'
       ).then(() => {
         api.deleteEmployee(this.employeeId);
-        console.log('Employee deleted');
       });
     },
   },

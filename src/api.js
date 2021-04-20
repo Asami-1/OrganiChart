@@ -69,7 +69,6 @@ export default {
 
     updateEmployee(employeeId, data) {
         let userRef = db.doc('/Employees/' + employeeId);
-        console.log(userRef);
         userRef.update(data);
     },
     //TODO Retrieve the lowest service level and set the created one's to retrievedLevel + 1
