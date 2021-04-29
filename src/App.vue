@@ -2,7 +2,7 @@
   <div id="app">
     <Navbar> </Navbar>
     <EmployeeList></EmployeeList>
-    <img alt="Vue logo" src="./assets/logo.png" />
+    <Service></Service>
     <router-view></router-view>
   </div>
 </template>
@@ -10,9 +10,12 @@
 <script>
 import Navbar from './components/Navbar';
 import EmployeeList from './components/EmployeeList';
+import Service from './components/Service';
+
 export default {
   name: 'App',
   components: {
+    Service,
     Navbar,
     EmployeeList,
   },
