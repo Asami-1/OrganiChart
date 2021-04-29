@@ -2,14 +2,9 @@
   <div id="app">
     <Navbar> </Navbar>
     <EmployeeList></EmployeeList>
-    <Service></Service>
+    <ServiceList></ServiceList>
     <router-view></router-view>
-    <vue-dropdown
-      @click="updateSelectableServices"
-      @setSelectedOption="updateSelectedService($event)"
-      :config="config"
-      :key="dropdownKey"
-    ></vue-dropdown>
+
     <button @click="print"></button>
   </div>
 </template>
@@ -19,16 +14,14 @@ import { db } from './firebase';
 import 'firebase/firestore';
 import Navbar from './components/Navbar';
 import EmployeeList from './components/EmployeeList';
-import Service from './components/Service';
-import VueDropdown from 'vue-dynamic-dropdown';
+import ServiceList from './components/ServiceList';
 
 export default {
   name: 'App',
   components: {
-    Service,
+    ServiceList,
     Navbar,
     EmployeeList,
-    VueDropdown,
   },
 
   firestore() {
@@ -41,10 +34,6 @@ export default {
   methods: {
     updateSelectableServices() {
       console.log('hi');
-    },
-    updateSelectedService($event) {
-      console.log($event.value);
-      this.config.prefix = $event.value;
     },
 
     print() {

@@ -1,47 +1,26 @@
-<template>
+<template >
   <div class="service">
-    ceci est unt est ceci est unt est ceci est unt est ceci est unt est ceci est
-    unt est ceci est unt est ceci est unt est ceci est unt est ceci est unt est
-    ceci est unt est ceci est unt est ceci est unt est ceci est unt est ceci est
-    unt est ceci est unt est ceci est unt est ceci est unt est ceci est unt est
-    ceci est unt est ceci est unt est ceci est unt est ceci est unt est ceci est
-    unt est ceci est unt est ceci est unt est ceci est unt est ceci est unt est
-    ceci est unt est ceci est unt est ceci est unt est ceci est unt est ceci est
-    unt est ceci est unt est ceci est unt est ceci est unt est ceci est unt est
-    ceci est unt est ceci est unt est ceci est unt est ceci est unt est ceci est
-    unt est ceci est unt est ceci est unt est ceci est unt est ceci est unt est
-    ceci est unt est ceci est unt est ceci est unt est ceci est unt est ceci est
-    unt est ceci est unt est ceci est unt est ceci est unt est ceci est unt est
-    ceci est unt est ceci est unt est ceci est unt est ceci est unt est ceci est
-    unt est ceci est unt est ceci est unt est ceci est unt est ceci est unt est
-    ceci est unt est ceci est unt est ceci est unt est ceci est unt est ceci est
-    unt est ceci est unt est
-
-    <div class="service-header"></div>
-    <div class="service-body"></div>
+    <PostCard></PostCard>
   </div>
 </template>
-
 <script>
+import PostCard from './PostCard';
 export default {
-  name: 'Service',
-
-  date() {
-    return {};
+  components: {
+    PostCard,
   },
-
-  components: {},
 };
 </script>
-
 <style lang="scss" scoped>
+/* main */
 .service {
-  top: 25%;
-  bottom: 0%;
-  width: 80%;
+  /* Rectangle 1 */
+  display: flex;
+  justify-content: center;
+  align-content: center;
 
-  &-header {
-    height: 20%;
+  &-name {
   }
 }
 </style>
+
