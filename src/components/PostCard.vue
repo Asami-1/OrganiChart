@@ -2,7 +2,40 @@
   <div class="postCard">
     <div class="postCard-top"></div>
     <hr />
-    <div class="postCard-bot"></div>
+    <div class="postCard-bot">
+      <div class="postCard-bot-delete">
+        <svg
+          viewBox="0 0 22 30"
+          class="postCard-bot-delete-icon"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M13.415 10.3963L10.5 13.3113L7.57125 10.3963L5.6325 12.335L8.56125 15.25L5.64625 18.165L7.585 20.1038L10.5 17.1887L13.415 20.1038L15.3538 18.165L12.4388 15.25L15.3538 12.335L13.415 10.3963ZM15.3125 1.5L13.9375 0.125H7.0625L5.6875 1.5H0.875V4.25H20.125V1.5H15.3125ZM2.25 22.125C2.25 23.6375 3.4875 24.875 5 24.875H16C17.5125 24.875 18.75 23.6375 18.75 22.125V5.625H2.25V22.125ZM5 8.375H16V22.125H5V8.375Z"
+            fill="black"
+          />
+        </svg>
+      </div>
+
+      <div class="postCard-bot-sep"></div>
+      <div class="postCard-bot-employee"></div>
+      <div class="postCard-bot-sep"></div>
+
+      <div class="postCard-bot-edit">
+        <svg
+          viewBox="0 0 22 30"
+          class="postCard-bot-edit-icon"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            width="100%"
+            d="M14.575 8.25L15.75 9.425L4.4 20.75H3.25V19.6L14.575 8.25ZM19.075 0.75C18.7625 0.75 18.4375 0.875 18.2 1.1125L15.9125 3.4L20.6 8.0875L22.8875 5.8C23.375 5.3125 23.375 4.5 22.8875 4.0375L19.9625 1.1125C19.7125 0.8625 19.4 0.75 19.075 0.75ZM14.575 4.7375L0.75 18.5625V23.25H5.4375L19.2625 9.425L14.575 4.7375Z"
+            fill="black"
+          />
+        </svg>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -14,10 +47,28 @@ export default {};
 
 
 <style lang="scss" scoped>
+hr {
+  border: none;
+  color: black;
+  background-color: black;
+  height: 2%;
+  width: 100%;
+  margin-block-start: 0%;
+  margin-block-end: 0%;
+}
+svg {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .postCard {
   /* Rectangle 1 */
 
-  height: 100px;
+  height: 50px;
   width: 100px;
 
   /* Orange */
@@ -25,8 +76,53 @@ export default {};
   border: 2px solid #000000;
   box-sizing: border-box;
   border-radius: 35px;
+  &-top {
+    height: 50%;
+    width: 100%;
+  }
+  &-bot {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    &-sep {
+      position: relative;
+      width: 1%;
+      height: 98%;
+      background-color: black;
+    }
+    &-delete {
+      display: flex;
+      left: 0px;
+      width: 18%;
+      height: 100%;
 
-  &-name {
+      &-icon {
+        margin: auto;
+        margin-top: 15%;
+        position: relative;
+        height: 70%;
+        width: 70%;
+      }
+    }
+    &-employee {
+      width: 63%;
+    }
+    &-edit {
+      display: flex;
+      right: 0px;
+      width: 18%;
+      height: 100%;
+
+      &-icon {
+        margin: auto;
+        position: relative;
+        margin-top: 15%;
+        height: 70%;
+        width: 70%;
+      }
+    }
   }
 }
 </style>
