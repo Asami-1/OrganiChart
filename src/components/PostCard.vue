@@ -89,11 +89,9 @@ export default {
     deletePost() {},
     editEmployee() {},
     deleteEmployee() {},
+    addCandidate() {},
   },
-  created() {
-    this.employeee = Promise.resolve(this.employee);
-    console.log(Promise.resolve(this.employee));
-  },
+  created() {},
   props: {
     employee: {
       type: Object,
