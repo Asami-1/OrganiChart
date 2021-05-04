@@ -19,6 +19,44 @@ export default {
         };
     },
 
+    async getEmployees() {
+        let res = [];
+        await db.collection('/Employees').get().then(employees => {
+            employees.forEach(employee => {
+                res.push(employee.data());
+
+            });
+        });
+        return res
+    },
+
+    async getServicePosts(serviceName) {
+        let res = [];
+        await db.doc('/Services/' + serviceName).collection('Posts')
+            .get()
+            .then((posts) => {
+
+                posts.forEach(post => {
+                    res.push(post.data());
+                });
+            })
+        return res;
+    },
+    async getServices() {
+        let res = [];
+        await db.collection("/Services").get().then(
+            (services) => {
+                services.forEach(async (service) => {
+                    let currentService = service.data();
+                    let servicePosts = await this.getServicePosts(currentService.serviceName);
+                    res.push({ serviceName: currentService.serviceName, posts: servicePosts });
+                });
+            }
+        )
+        console.log(res);
+        return res;
+
+    },
     /**
      * create an employee
      */
