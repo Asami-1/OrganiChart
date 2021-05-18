@@ -118,9 +118,6 @@ export default {
     },
   },
 
-  created() {
-    this.$store.state.postCardCounter++;
-  },
   props: {
     employee: {
       type: Object,
