@@ -1,5 +1,5 @@
 <template>
-  <div class="postCard">
+  <div :style="{ 'background-color': cardColor }" class="postCard">
     <div class="postCard-top">
       <div @click="deletePost" class="postCard-top-delete">
         <svg
@@ -15,7 +15,11 @@
         </svg>
       </div>
       <div class="postCard-top-sep"></div>
-      <div class="postCard-top-post"></div>
+      <div class="postCard-top-post">
+        <p>
+          <span>{{ postName }}</span>
+        </p>
+      </div>
       <div class="postCard-top-sep"></div>
 
       <div @click="editPost" class="postCard-top-edit">
@@ -51,7 +55,12 @@
       </div>
 
       <div class="postCard-bot-sep"></div>
-      <div class="postCard-bot-employee"></div>
+      <div class="postCard-bot-employee">
+        <p>
+          <span>{{ employee.name }}</span
+          ><span>{{ employee.surname }}</span>
+        </p>
+      </div>
       <div class="postCard-bot-sep"></div>
 
       <div @click="editEmployee" class="postCard-bot-edit">
@@ -91,32 +100,62 @@ export default {
     deleteEmployee() {},
     addCandidate() {},
   },
-  created() {},
+
+  computed: {
+    cardColor() {
+      var color = '';
+      if (!this.isOccupied) {
+        color = '#FFFAF0';
+      } else if (this.employee.employeeStatus == '1') {
+        color = '#7FFF00';
+      } else if (this.employee.employeeStatus == '2') {
+        color = '#FF8C00';
+      } else if (this.employee.employeeStatus == '3') {
+        color = '#F08080';
+      }
+
+      return color;
+    },
+  },
+
+  created() {
+    this.$store.state.postCardCounter++;
+  },
   props: {
     employee: {
       type: Object,
     },
-    // serviceName: {
-    //   type: String,
-    //   default: 'DEFAULT NAME',
-    // },
-    // postLevel: {
-    //   type: Number,
-    // },
-    // postName: {
-    //   type: String,
-    //   default: 'DEFAULT NAME',
-    // },
-    // currentEmployee: {
-    //   type: String,
-    //   default: 'DEFAULT NAME',
-    // },
+    serviceId: {
+      type: String,
+      default: 'DEFAULT NAME',
+    },
+    postLevel: {
+      type: String,
+    },
+    postName: {
+      type: String,
+      default: 'DEFAULT NAME',
+    },
+    postId: {
+      type: String,
+    },
+    postCandidates: {
+      type: Array,
+    },
+    isOccupied: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
 
 
 <style lang="scss" scoped>
+p span {
+  display: block;
+}
+
 hr {
   border: none;
   color: black;
@@ -140,9 +179,7 @@ svg {
 
   height: 200px;
   width: 400 px;
-
   /* Orange */
-  background: #f2994a;
   border: 2px solid #000000;
   box-sizing: border-box;
   border-radius: 35px;
@@ -174,6 +211,9 @@ svg {
     }
     &-post {
       width: 63%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     &-edit {
       display: flex;
