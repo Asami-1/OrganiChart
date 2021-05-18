@@ -4,8 +4,6 @@
     <EmployeeList></EmployeeList>
     <ServiceList></ServiceList>
     <router-view></router-view>
-
-    <button @click="print"></button>
   </div>
 </template>
 
@@ -28,45 +26,6 @@ export default {
     return {
       employees: db.collection('/Employees'),
       services: db.collection('/Services'),
-    };
-  },
-
-  methods: {
-    updateSelectableServices() {
-      console.log('hi');
-    },
-
-    print() {
-      console.log('hi');
-    },
-  },
-
-  computed: {
-    servicesSelectable() {
-      return this.services;
-    },
-  },
-
-  watch: {
-    servicesSelectable() {
-      this.config.options = [];
-      this.services.forEach((service) => {
-        this.config.options.push({ value: service.id });
-      });
-      this.dropdownKey += 1;
-    },
-  },
-  data() {
-    return {
-      dropdownKey: 0,
-      employees: [],
-      services: [],
-      config: {
-        options: [],
-        prefix: 'Sélectionner un service',
-        backgroundColor: 'green',
-        width: 400,
-      },
     };
   },
 };

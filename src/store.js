@@ -10,9 +10,9 @@ Vue.use(Vuex);
  */
 const store = new Vuex.Store({
     state: {
-        services: {
+        services: [{
             posts: {},
-        },
+        }],
         employees: {},
     },
     mutations: {
@@ -33,6 +33,7 @@ const store = new Vuex.Store({
             commit("updateEmployees", (employees));
 
             const services = await api.getServices();
+
             console.log(services)
             commit('updateServices', services);
 

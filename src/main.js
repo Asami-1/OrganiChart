@@ -19,7 +19,7 @@ new Vue({
     setTimeout(() => {
       store.dispatch('updateStore');
 
-    }, 5000);
+    }, 2000);
 
   },
 }).$mount('#app');
