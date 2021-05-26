@@ -212,7 +212,6 @@ export default {
   justify-content: center;
   align-content: center;
   margin:2em;
-  background:green;
   &-card { 
     display:flex;
     justify-content: center;
