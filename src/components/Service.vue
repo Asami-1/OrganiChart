@@ -1,6 +1,9 @@
 <template >
   <div class="service">
+    <div class="service-type">
     {{ serviceName }}
+    </div>
+    <div class="service-card">
     <PostCard
       v-for="post in posts"
       :key="post.post.postId"
@@ -16,6 +19,8 @@
     <!-- <button @click="activate()"></button>
     <button @click="clear()"></button>
     <button @click="showStore()"></button> -->
+    </div>
+    <div class="service-separator"></div>
   </div>
 </template>
 
@@ -204,12 +209,31 @@ export default {
 /* main */
 .service {
   /* Rectangle 1 */
-  display: flex;
   justify-content: center;
   align-content: center;
-
-  &-name {
+  margin:2em;
+  &-card { 
+    display:flex;
   }
+  &-type{
+    display: inline-block;
+    justify-content: center;
+    width:60%;
+    border: 3px solid black;
+    font-size:120%;
+    position:relative;
+    padding:0.3em;
+    border-radius: 10px;
+    margin-bottom:2em;
+  }
+&-separator{
+   position: relative;
+    display: block;
+    width: 90%;
+    margin:3em;
+    border-bottom: 3px solid black;
+  
+}
 }
 </style>
 
