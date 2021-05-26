@@ -4,7 +4,7 @@
     {{ serviceName }}
     </div>
     <div class="service-card">
-    <PostCard
+    <PostCard class="service-card-post"
       v-for="post in posts"
       :key="post.post.postId"
       :employee="post.employee"
@@ -212,8 +212,19 @@ export default {
   justify-content: center;
   align-content: center;
   margin:2em;
+  background:green;
   &-card { 
     display:flex;
+    justify-content: center;
+    width:100%;
+    position:relative;
+    flex-wrap: wrap;
+    &-post{
+      width:15%;
+      margin:1em;
+      background:white;
+    }
+
   }
   &-type{
     display: inline-block;
