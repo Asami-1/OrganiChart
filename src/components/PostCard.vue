@@ -84,6 +84,7 @@
 
 
 <script>
+import VueSimpleAlert from 'vue-simple-alert';
 export default {
   name: 'PostCard',
 
@@ -94,10 +95,24 @@ export default {
   },
 
   methods: {
-    editPost() {},
-    deletePost() {},
+    editPost() {
+
+    },
+    async deletePost() {      
+      await VueSimpleAlert.confirm(
+        'Êtes-vous sûr de vouloir supprimer ce poste ?'
+      ).then(() => {
+        // api.deletePost(this.post);
+      });
+    },
     editEmployee() {},
-    deleteEmployee() {},
+    async deleteEmployee() {
+      await VueSimpleAlert.confirm(
+        'Êtes-vous sûr de vouloir supprimer cet employé ?'
+      ).then(() => {
+        // api.deleteEmployee(this.employeeId);
+      });
+    },
     addCandidate() {},
   },
 
@@ -197,6 +212,7 @@ svg {
       left: 0px;
       width: 18%;
       height: 100%;
+      cursor: pointer;
 
       &-icon {
         margin: auto;
@@ -244,6 +260,7 @@ svg {
       left: 0px;
       width: 18%;
       height: 100%;
+      cursor: pointer;
 
       &-icon {
         margin: auto;
