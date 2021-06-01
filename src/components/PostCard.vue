@@ -56,7 +56,7 @@
 
       <div class="postCard-bot-sep"></div>
       <div class="postCard-bot-employee">
-        <p>
+        <p v-if="employee !== undefined">
           <span>{{ employee.name }}</span
           ><span>{{ employee.surname }}</span>
         </p>
@@ -90,9 +90,7 @@ export default {
   name: 'PostCard',
 
   data() {
-    return {
-      employeee: {},
-    };
+    return {};
   },
 
   methods: {
@@ -104,10 +102,79 @@ export default {
         // api.deletePost(this.post);
       });
     },
-    editEmployee() {},
+
+    /**
+     * Edits the employee affected to the current post.
+     */
+    async editEmployee() {
+      let data = {};
+      data = await VueSimpleAlert.fire({
+        title: 'Affecter un employé',
+        text: 'Nom',
+        showCancelButton: true,
+        html:
+          '<input id="swal-input1" class="swal2-input" placeholder="Nom">' +
+          '<input id="swal-input2" class="swal2-input" placeholder="Prénom">',
+
+        preConfirm: () => {
+          return {
+            name: `${document.getElementById('swal-input1').value}`,
+            surname: `${document.getElementById('swal-input2').value}`,
+          };
+        },
+      });
+      data = data.value;
+      const newEmployeeName = data.name.toLowerCase();
+      const newEmployeeSurname = data.surname.toLowerCase();
+
+      // Retrieve arrays of name and surname
+      const employeeNames = this.$store.state.employees.map((employee) => {
+        return employee.name.toLowerCase();
+      });
+      const employeeSurnames = this.$store.state.employees.map((employee) => {
+        return employee.surname.toLowerCase();
+      });
+
+      // Check user input
+      if (
+        employeeSurnames.includes(newEmployeeSurname) &&
+        employeeNames.includes(newEmployeeName)
+      ) {
+        //Retrieve corresponding employee's data
+        let employeeData = this.$store.state.employees[
+          employeeSurnames.indexOf(newEmployeeSurname)
+        ];
+
+        if (this.employee !== undefined) {
+          data = { postId: 'NA' };
+          await api.updateEmployee(this.employee.employeeId, data);
+          data = { isOccupied: false };
+          await api.updatePost(this.postId, this.serviceId, data);
+        }
+
+        // Change Service if affected to a new one
+        if (employeeData.serviceId != this.serviceId) {
+          employeeData.serviceId = this.serviceId;
+        }
+
+        // modify data and update
+        employeeData.postName = this.postName;
+        employeeData.postId = this.postId;
+        employeeData.status = 1;
+        await api.updateEmployee(employeeData.employeeId, employeeData);
+        await api.updatePost(this.postId, this.serviceId, {
+          isOccupied: true,
+        });
+        this.$store.dispatch('updateStore');
+      } else {
+        await VueSimpleAlert.confirm("Erreur : L'employé n'existe pas");
+      }
+    },
+
+    // faire en plus propre si temps il y a
     async deleteEmployeeFromPost() {
       await VueSimpleAlert.confirm(
-        'Êtes-vous sûr de vouloir supprimer cet employé ?'
+        "Êtes-vous sûr de vouloir retirer l'employé de ce poste ?"
       ).then(() => {
         api.deleteEmployeeFromPost(
           this.employee.employeeId,
@@ -115,6 +182,7 @@ export default {
           this.serviceId
         );
       });
+      this.$store.dispatch('updateStore');
     },
     addCandidate() {},
   },
@@ -124,12 +192,14 @@ export default {
       var color = '';
       if (!this.isOccupied) {
         color = '#FFFAF0';
-      } else if (this.employee.employeeStatus == '1') {
-        color = '#7FFF00';
-      } else if (this.employee.employeeStatus == '2') {
-        color = '#FF8C00';
-      } else if (this.employee.employeeStatus == '3') {
-        color = '#F08080';
+      } else if (this.employee !== undefined) {
+        if (this.employee.employeeStatus == '1') {
+          color = '#7FFF00';
+        } else if (this.employee.employeeStatus == '2') {
+          color = '#FF8C00';
+        } else if (this.employee.employeeStatus == '3') {
+          color = '#F08080';
+        }
       }
 
       return color;
@@ -230,6 +300,7 @@ svg {
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
     }
     &-edit {
       display: flex;
@@ -281,6 +352,7 @@ svg {
       right: 0px;
       width: 18%;
       height: 100%;
+      cursor: pointer;
 
       &-icon {
         margin: auto;

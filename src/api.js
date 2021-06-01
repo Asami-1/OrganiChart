@@ -30,33 +30,7 @@ export default {
         return res
     },
 
-    async getServicePosts(serviceName) {
-        let res = [];
-        await db.doc('/Services/' + serviceName).collection('Posts')
-            .get()
-            .then((posts) => {
 
-                posts.forEach(post => {
-                    res.push(post.data());
-                });
-            })
-        return res;
-    },
-    async getServices() {
-        let res = [];
-        await db.collection("/Services").get().then(
-            (services) => {
-                services.forEach(async (service) => {
-                    let currentService = service.data();
-                    let servicePosts = await this.getServicePosts(currentService.serviceName);
-                    res.push({ serviceName: currentService.serviceName, posts: servicePosts });
-                });
-            }
-        )
-        console.log(res);
-        return res;
-
-    },
     /**
      * create an employee
      */
@@ -121,9 +95,15 @@ export default {
             }
         )
     },
-    updateEmployee(employeeId, data) {
+    async updateEmployee(employeeId, data) {
         let userRef = db.doc('/Employees/' + employeeId);
-        userRef.update(data);
+        await userRef.update(data);
+    },
+
+
+    async updatePost(postId, serviceId, data) {
+        var postRef = db.doc('Services/' + serviceId + '/Posts/' + postId);
+        await postRef.update(data);
     },
     //TODO Retrieve the lowest service level and set the created one's to retrievedLevel + 1
     /**
@@ -307,5 +287,35 @@ export default {
                         });
                 });
             });
+    },
+
+
+
+
+    async getServicePosts(serviceName) {
+        let res = [];
+        await db.doc('/Services/' + serviceName).collection('Posts')
+            .get()
+            .then((posts) => {
+
+                posts.forEach(post => {
+                    res.push(post.data());
+                });
+            })
+        return res;
+    },
+    async getServices() {
+        let res = [];
+        await db.collection("/Services").get().then(
+            (services) => {
+                services.forEach(async (service) => {
+                    let currentService = service.data();
+                    let servicePosts = await this.getServicePosts(currentService.serviceName);
+                    res.push({ serviceName: currentService.serviceName, posts: servicePosts });
+                });
+            }
+        )
+        console.log(res);
+        return res;
     },
 };

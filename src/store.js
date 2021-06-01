@@ -13,7 +13,7 @@ const store = new Vuex.Store({
         services: [{
             posts: {},
         }],
-        employees: {},
+        employees: [],
     },
     mutations: {
         updateEmployees(state, newEmployees) {
