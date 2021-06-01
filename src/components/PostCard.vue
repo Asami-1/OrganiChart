@@ -40,7 +40,7 @@
     <hr />
 
     <div class="postCard-bot">
-      <div @click="deleteEmployee" class="postCard-bot-delete">
+      <div @click="deleteEmployeeFromPost" class="postCard-bot-delete">
         <svg
           viewBox="0 0 22 30"
           class="postCard-bot-delete-icon"
@@ -85,6 +85,7 @@
 
 <script>
 import VueSimpleAlert from 'vue-simple-alert';
+import api from '../api';
 export default {
   name: 'PostCard',
 
@@ -95,10 +96,8 @@ export default {
   },
 
   methods: {
-    editPost() {
-
-    },
-    async deletePost() {      
+    editPost() {},
+    async deletePost() {
       await VueSimpleAlert.confirm(
         'Êtes-vous sûr de vouloir supprimer ce poste ?'
       ).then(() => {
@@ -106,11 +105,15 @@ export default {
       });
     },
     editEmployee() {},
-    async deleteEmployee() {
+    async deleteEmployeeFromPost() {
       await VueSimpleAlert.confirm(
         'Êtes-vous sûr de vouloir supprimer cet employé ?'
       ).then(() => {
-        // api.deleteEmployee(this.employeeId);
+        api.deleteEmployeeFromPost(
+          this.employee.employeeId,
+          this.postId,
+          this.serviceId
+        );
       });
     },
     addCandidate() {},

@@ -105,6 +105,22 @@ export default {
             });
     },
 
+    deleteEmployeeFromPost(employeeId, postId, serviceId) {
+        var employeeRef = db.doc('/Employees/' + employeeId);
+        employeeRef.update(
+            {
+                postId: 'NA',
+                status: 0
+            }
+        )
+        var postRef = db.doc('Services/' + serviceId + '/Posts/' + postId);
+        postRef.update(
+            {
+                isOccupied: false,
+
+            }
+        )
+    },
     updateEmployee(employeeId, data) {
         let userRef = db.doc('/Employees/' + employeeId);
         userRef.update(data);
