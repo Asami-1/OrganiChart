@@ -81,8 +81,23 @@
     </div>
   </div>
   <div class="post-candidate">
-    <div class="post-candidate-name"> test1</div>
+    <div class="post-candidate-name">
+      <div @click="DelCandidate" class="post-candidate-name-del">
+      <svg
+          viewBox="0 0 22 30"
+          class="postCard-bot-delete-icon"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M13.415 10.3963L10.5 13.3113L7.57125 10.3963L5.6325 12.335L8.56125 15.25L5.64625 18.165L7.585 20.1038L10.5 17.1887L13.415 20.1038L15.3538 18.165L12.4388 15.25L15.3538 12.335L13.415 10.3963ZM15.3125 1.5L13.9375 0.125H7.0625L5.6875 1.5H0.875V4.25H20.125V1.5H15.3125ZM2.25 22.125C2.25 23.6375 3.4875 24.875 5 24.875H16C17.5125 24.875 18.75 23.6375 18.75 22.125V5.625H2.25V22.125ZM5 8.375H16V22.125H5V8.375Z"
+            fill="black"
+          />
+        </svg>
+      </div>
+      <div class="post-candidate-name-employee">test</div>
     <div @click="AddCandidate" class="post-candidate-add">+</div>
+  </div>
   </div>
   </div>
 </template>
@@ -115,6 +130,13 @@ export default {
     async deleteEmployee() {
       await VueSimpleAlert.confirm(
         'Êtes-vous sûr de vouloir supprimer cet employé ?'
+      ).then(() => {
+        // api.deleteEmployee(this.employeeId);
+      });
+    },
+    async DelCandidate() {
+      await VueSimpleAlert.confirm(
+        'Êtes-vous sûr de vouloir supprimer ce candidat ?'
       ).then(() => {
         // api.deleteEmployee(this.employeeId);
       });
@@ -322,6 +344,16 @@ svg {
 
       &-name{
         width:90%;
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        &-del{
+          width:20%;
+          cursor: pointer;
+        }
+        &-employee{
+          width:80%;
+        }
       }
       &-add{
         width:15%;
