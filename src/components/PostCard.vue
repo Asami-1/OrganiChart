@@ -272,6 +272,8 @@ svg {
       display: flex;
       justify-content: center;
       align-items: center;
+      font-weight:bold;
+      text-transform:uppercase;
       font-size:1.5vh;
     }
     &-edit {
@@ -319,6 +321,7 @@ svg {
     &-employee {
       width: 63%;
       font-size:2vh;
+      font-weight:bold;
     }
     &-edit {
       display: flex;
