@@ -1,4 +1,5 @@
 <template>
+<div class="post">
   <div :style="{ 'background-color': cardColor }" class="postCard">
     <div class="postCard-top">
       <div @click="deletePost" class="postCard-top-delete">
@@ -79,6 +80,11 @@
       </div>
     </div>
   </div>
+  <div class="post-candidate">
+    <div class="post-candidate-name"> test1</div>
+    <div @click="AddCandidate" class="post-candidate-add">+</div>
+  </div>
+  </div>
 </template>
 
 
@@ -114,6 +120,23 @@ export default {
       });
     },
     addCandidate() {},
+    async AddCandidate() {
+      VueSimpleAlert.fire({
+         title: 'Ajouter un candidat',
+        input: 'select',
+        inputOptions: {
+          //link api//
+        },
+        inputPlaceholder: 'Selectionner un employé',
+        showCancelButton: true,
+        preConfirm: () => {
+          return {
+            name: `${document.getElementById('swal-input1').value}`,
+            surname: `${document.getElementById('swal-input2').value}`,
+          };
+        },
+      });
+    }
   },
 
   computed: {
@@ -189,8 +212,8 @@ svg {
 .postCard {
   /* Rectangle 1 */
 
-  height: 200px;
-  width: 400 px;
+  height: 20vh;
+  width:22vh;
   /* Orange */
   border: 2px solid #000000;
   box-sizing: border-box;
@@ -227,6 +250,7 @@ svg {
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size:1.5vh;
     }
     &-edit {
       display: flex;
@@ -272,6 +296,7 @@ svg {
     }
     &-employee {
       width: 63%;
+      font-size:2vh;
     }
     &-edit {
       display: flex;
@@ -288,5 +313,24 @@ svg {
       }
     }
   }
+}
+.post{
+    &-candidate {
+      height:3vh;
+      width:22vh;
+      display: flex;
+
+      &-name{
+        width:90%;
+      }
+      &-add{
+        width:15%;
+        top:0px;
+        font-size:2.3vh;
+        border-radius: 3em;
+        border: 1px solid black;
+        cursor: pointer;
+      }
+    }
 }
 </style>
