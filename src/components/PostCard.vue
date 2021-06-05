@@ -166,11 +166,11 @@ export default {
       var color = '';
       if (!this.isOccupied) {
         color = '#FFFAF0';
-      } else if (this.employee.employeeStatus == '1') {
+      } else if (this.employee.status == '1') {
         color = '#7FFF00';
-      } else if (this.employee.employeeStatus == '2') {
+      } else if (this.employee.status == '2') {
         color = '#FF8C00';
-      } else if (this.employee.employeeStatus == '3') {
+      } else if (this.employee.status == '3') {
         color = '#F08080';
       }
 
