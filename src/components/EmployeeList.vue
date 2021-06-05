@@ -11,7 +11,7 @@
 
     <div class="list-center">
       <!-- <ul class="list-center-employees"> -->
-      <EmployeeCard
+      <EmployeeCard class="list-center-card"
         v-for="employee in filteredEmployees"
         :key="employee.employeeId"
         :employee-id="employee.employeeId"
@@ -173,9 +173,8 @@ export default {
     align-items: center;
     overflow-y: scroll;
     margin-top: 30%;
-    height: 70%;
+    height: 75vh;
     width: 100%;
-    padding-top: 2em;
   }
   &-bottom {
     height: 7%;
