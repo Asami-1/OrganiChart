@@ -341,6 +341,7 @@ svg {
       height:3vh;
       width:22vh;
       display: flex;
+      font-size:2.3vh;
 
       &-name{
         width:90%;
@@ -358,9 +359,7 @@ svg {
       &-add{
         width:15%;
         top:0px;
-        font-size:2.3vh;
-        border-radius: 3em;
-        border: 1px solid black;
+        font-size:2.5vh;
         cursor: pointer;
       }
     }

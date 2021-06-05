@@ -219,8 +219,9 @@ export default {
     position:relative;
     flex-wrap: wrap;
     &-post{
-      width:12%;
-      margin:2.2em
+      width:17vh;
+      margin:3vh;
+      padding:2vh;
        }
 
   }
