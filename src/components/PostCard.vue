@@ -146,17 +146,11 @@ export default {
       VueSimpleAlert.fire({
          title: 'Ajouter un candidat',
         input: 'select',
-        inputOptions: {
-          //link api//
+        inputOptions: { 
+           //link api//
         },
         inputPlaceholder: 'Selectionner un employé',
         showCancelButton: true,
-        preConfirm: () => {
-          return {
-            name: `${document.getElementById('swal-input1').value}`,
-            surname: `${document.getElementById('swal-input2').value}`,
-          };
-        },
       });
     }
   },
