@@ -106,6 +106,8 @@
 
 <script>
 import VueSimpleAlert from 'vue-simple-alert';
+import api from '../api';
+
 export default {
   name: 'PostCard',
 
@@ -150,7 +152,7 @@ export default {
         inputPlaceholder: 'Selectionner un employé',
         showCancelButton: true,
       });
-      console.log(employeeId);
+      api.addCandidate(this.postId, this.serviceId, employeeId);
     },
   },
 
