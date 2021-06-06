@@ -1,22 +1,23 @@
 <template >
   <div class="service">
     <div class="service-type">
-    {{ serviceName }}
+      {{ serviceName }}
     </div>
     <div class="service-card">
-    <PostCard class="service-card-post"
-      v-for="post in posts"
-      :key="post.post.postId"
-      :employee="post.employee"
-      :serviceId="post.post.postName"
-      :postLevel="post.post.postLevel"
-      :postName="post.post.postName"
-      :postId="post.post.postId"
-      :postCandidates="post.post.postCandidates"
-      :isOccupied="post.post.isOccupied"
-    ></PostCard>
-    <!-- Debbugging purposes -->
-    <!-- <button @click="activate()"></button>
+      <PostCard
+        class="service-card-post"
+        v-for="post in posts"
+        :key="post.post.postId"
+        :employee="post.employee"
+        :serviceId="post.post.postName"
+        :postLevel="post.post.postLevel"
+        :postName="post.post.postName"
+        :postId="post.post.postId"
+        :postCandidates="post.post.postCandidates"
+        :isOccupied="post.post.isOccupied"
+      ></PostCard>
+      <!-- Debbugging purposes -->
+      <!-- <button @click="activate()"></button>
     <button @click="clear()"></button>
     <button @click="showStore()"></button> -->
     </div>
@@ -178,7 +179,6 @@ export default {
     employees() {
       return this.$store.state.employees;
     },
-
     serviceData() {
       return this.$store.state.services.filter((service) => {
         return service.serviceName == this.serviceName;
@@ -211,39 +211,37 @@ export default {
   /* Rectangle 1 */
   justify-content: center;
   align-content: center;
-  margin:2vh;
-  &-card { 
-    display:flex;
+  margin: 2vh;
+  &-card {
+    display: flex;
     justify-content: center;
-    width:100%;
-    position:relative;
+    width: 100%;
+    position: relative;
     flex-wrap: wrap;
-    &-post{
-      width:17vh;
-      margin:3vh;
-      padding:2vh;
-       }
-
+    &-post {
+      width: 17vh;
+      margin: 3vh;
+      padding: 2vh;
+    }
   }
-  &-type{
+  &-type {
     display: inline-block;
     justify-content: center;
-    width:60%;
+    width: 60%;
     border: 3px solid black;
-    font-size:120%;
-    position:relative;
-    padding:0.3em;
+    font-size: 120%;
+    position: relative;
+    padding: 0.3em;
     border-radius: 10px;
-    margin-bottom:2em;
+    margin-bottom: 2em;
   }
-&-separator{
-   position: relative;
+  &-separator {
+    position: relative;
     display: block;
     width: 90%;
-    margin:3em;
+    margin: 3em;
     border-bottom: 3px solid black;
-  
-}
+  }
 }
 </style>
 
