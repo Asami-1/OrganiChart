@@ -29,6 +29,16 @@ export default {
         });
         return res
     },
+    async getEmployee(employeeId) {
+        var employeeData;
+        await db.doc('/Employees/' + employeeId).get().then((employee) => {
+            employeeData = employee.data();
+        })
+        console.log(employeeData)
+        return Promise.resolve(employeeData);
+
+
+    },
 
     async getServicePosts(serviceName) {
         let res = [];
@@ -105,9 +115,31 @@ export default {
             });
     },
 
-    updateEmployee(employeeId, data) {
+    deleteEmployeeFromPost(employeeId, postId, serviceId) {
+        var employeeRef = db.doc('/Employees/' + employeeId);
+        employeeRef.update(
+            {
+                postId: 'NA',
+                status: 0
+            }
+        )
+        var postRef = db.doc('Services/' + serviceId + '/Posts/' + postId);
+        postRef.update(
+            {
+                isOccupied: false,
+
+            }
+        )
+    },
+    async updateEmployee(employeeId, data) {
         let userRef = db.doc('/Employees/' + employeeId);
-        userRef.update(data);
+        await userRef.update(data);
+    },
+
+
+    async updatePost(postId, serviceId, data) {
+        var postRef = db.doc('Services/' + serviceId + '/Posts/' + postId);
+        await postRef.update(data);
     },
     //TODO Retrieve the lowest service level and set the created one's to retrievedLevel + 1
     /**
@@ -152,6 +184,22 @@ export default {
     //     });
     // },
 
+
+
+
+    async addCandidate(postId, serviceId, employeeId) {
+        this.updateEmployee(employeeId, { isCandidate: true });
+        var employeeData = await this.getEmployee(employeeId);
+        console.log('Services/' + serviceId + '/Posts/' + postId)
+        var postRef = db.doc('Services/' + serviceId + '/Posts/' + postId);
+        postRef.update({
+            postCandidates: firebase.firestore.FieldValue.arrayUnion(employeeData)
+        })
+
+    },
+
+
+    //                                     UNUSED STUFF FOR DEVELOPMENT                     //
     /**
      * Shows store info on the console
      */

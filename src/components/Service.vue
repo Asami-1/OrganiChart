@@ -1,21 +1,27 @@
 <template >
   <div class="service">
-    {{ serviceName }}
-    <PostCard
-      v-for="post in posts"
-      :key="post.post.postId"
-      :employee="post.employee"
-      :serviceId="post.post.postName"
-      :postLevel="post.post.postLevel"
-      :postName="post.post.postName"
-      :postId="post.post.postId"
-      :postCandidates="post.post.postCandidates"
-      :isOccupied="post.post.isOccupied"
-    ></PostCard>
-    <!-- Debbugging purposes -->
-    <!-- <button @click="activate()"></button>
+    <div class="service-type">
+      {{ serviceName }}
+    </div>
+    <div class="service-card">
+      <PostCard
+        class="service-card-post"
+        v-for="post in posts"
+        :key="post.post.postId"
+        :employee="post.employee"
+        :serviceId="post.post.postName"
+        :postLevel="post.post.postLevel"
+        :postName="post.post.postName"
+        :postId="post.post.postId"
+        :postCandidates="post.post.postCandidates"
+        :isOccupied="post.post.isOccupied"
+      ></PostCard>
+      <!-- Debbugging purposes -->
+      <!-- <button @click="activate()"></button>
     <button @click="clear()"></button>
     <button @click="showStore()"></button> -->
+    </div>
+    <div class="service-separator"></div>
   </div>
 </template>
 
@@ -173,7 +179,6 @@ export default {
     employees() {
       return this.$store.state.employees;
     },
-
     serviceData() {
       return this.$store.state.services.filter((service) => {
         return service.serviceName == this.serviceName;
@@ -204,11 +209,38 @@ export default {
 /* main */
 .service {
   /* Rectangle 1 */
-  display: flex;
   justify-content: center;
   align-content: center;
-
-  &-name {
+  margin: 2vh;
+  &-card {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    flex-wrap: wrap;
+    &-post {
+      width: 17vh;
+      margin: 3vh;
+      padding: 2vh;
+    }
+  }
+  &-type {
+    display: inline-block;
+    justify-content: center;
+    width: 60%;
+    border: 3px solid black;
+    font-size: 120%;
+    position: relative;
+    padding: 0.3em;
+    border-radius: 10px;
+    margin-bottom: 2em;
+  }
+  &-separator {
+    position: relative;
+    display: block;
+    width: 90%;
+    margin: 3em;
+    border-bottom: 3px solid black;
   }
 }
 </style>
