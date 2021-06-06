@@ -119,8 +119,7 @@ export default {
 .card {
   width: 80%;
   padding: 1vw;
-  background-color: white;
-  margin-top: 5%;
+  margin:1vh;
   border: 1px solid black;
   border-radius: 10px;
   position: relative;

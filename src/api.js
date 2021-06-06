@@ -29,6 +29,16 @@ export default {
         });
         return res
     },
+    async getEmployee(employeeId) {
+        var employeeData;
+        await db.doc('/Employees/' + employeeId).get().then((employee) => {
+            employeeData = employee.data();
+        })
+        console.log(employeeData)
+        return Promise.resolve(employeeData);
+
+
+    },
 
 
     /**
@@ -148,6 +158,22 @@ export default {
     //     });
     // },
 
+
+
+
+    async addCandidate(postId, serviceId, employeeId) {
+        this.updateEmployee(employeeId, { isCandidate: true });
+        var employeeData = await this.getEmployee(employeeId);
+        console.log('Services/' + serviceId + '/Posts/' + postId)
+        var postRef = db.doc('Services/' + serviceId + '/Posts/' + postId);
+        postRef.update({
+            postCandidates: firebase.firestore.FieldValue.arrayUnion(employeeData)
+        })
+
+    },
+
+
+    //                                     UNUSED STUFF FOR DEVELOPMENT                     //
     /**
      * Shows store info on the console
      */

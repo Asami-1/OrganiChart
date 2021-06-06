@@ -11,7 +11,7 @@
 
     <div class="list-center">
       <!-- <ul class="list-center-employees"> -->
-      <EmployeeCard
+      <EmployeeCard class="list-center-card"
         v-for="employee in filteredEmployees"
         :key="employee.employeeId"
         :employee-id="employee.employeeId"
@@ -114,8 +114,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .list {
-  width: 20%;
-  height: 100%;
+  width: 35vh;
+  height: 100vh;
   position: fixed;
   right: 0px;
   top: 0px;
@@ -123,12 +123,17 @@ export default {
   z-index: 1000;
   border-radius: 4% 0% 0% 4%;
   border: 1px solid black;
-
   display: flex;
   justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
   overflow: hidden;
+  @media (max-width: 1024px){
+    width:30vh;
+  }
+  @media (max-width: 768px){
+    width:25vh;
+  }
 
   &-header {
     width: 100%;
@@ -141,8 +146,8 @@ export default {
     padding-bottom: 2em;
 
     &-inside {
-      top: 8%;
-      width: 73%;
+      top: 1vh;
+      width: 27vh;
       height: 69%;
       background-color: #ffffff;
       display: inline-flex;
@@ -168,9 +173,8 @@ export default {
     align-items: center;
     overflow-y: scroll;
     margin-top: 30%;
-    height: 70%;
+    height: 75vh;
     width: 100%;
-    padding-top: 2em;
   }
   &-bottom {
     height: 7%;
@@ -178,9 +182,8 @@ export default {
     display: flex;
     justify-content: center;
     &-add {
-      margin-top: 0.5rem;
-      margin-bottom: 2rem;
-      padding: 1rem;
+      margin-top: 0.5vh;
+      padding: 1vh;
       height: 4rem;
       width: 5rem;
       font-size: 2em;
