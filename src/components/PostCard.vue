@@ -1,81 +1,102 @@
 <template>
-  <div :style="{ 'background-color': cardColor }" class="postCard">
-    <div class="postCard-top">
-      <div @click="deletePost" class="postCard-top-delete">
-        <svg
-          viewBox="0 0 22 30"
-          class="postCard-bot-delete-icon"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.415 10.3963L10.5 13.3113L7.57125 10.3963L5.6325 12.335L8.56125 15.25L5.64625 18.165L7.585 20.1038L10.5 17.1887L13.415 20.1038L15.3538 18.165L12.4388 15.25L15.3538 12.335L13.415 10.3963ZM15.3125 1.5L13.9375 0.125H7.0625L5.6875 1.5H0.875V4.25H20.125V1.5H15.3125ZM2.25 22.125C2.25 23.6375 3.4875 24.875 5 24.875H16C17.5125 24.875 18.75 23.6375 18.75 22.125V5.625H2.25V22.125ZM5 8.375H16V22.125H5V8.375Z"
-            fill="black"
-          />
-        </svg>
-      </div>
-      <div class="postCard-top-sep"></div>
-      <div class="postCard-top-post">
-        <p>
-          <span>{{ postName }}</span>
-        </p>
-      </div>
-      <div class="postCard-top-sep"></div>
+  <div class="post">
+    <div :style="{ 'background-color': cardColor }" class="postCard">
+      <div class="postCard-top">
+        <div @click="deletePost" class="postCard-top-delete">
+          <svg
+            viewBox="0 0 22 30"
+            class="postCard-bot-delete-icon"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.415 10.3963L10.5 13.3113L7.57125 10.3963L5.6325 12.335L8.56125 15.25L5.64625 18.165L7.585 20.1038L10.5 17.1887L13.415 20.1038L15.3538 18.165L12.4388 15.25L15.3538 12.335L13.415 10.3963ZM15.3125 1.5L13.9375 0.125H7.0625L5.6875 1.5H0.875V4.25H20.125V1.5H15.3125ZM2.25 22.125C2.25 23.6375 3.4875 24.875 5 24.875H16C17.5125 24.875 18.75 23.6375 18.75 22.125V5.625H2.25V22.125ZM5 8.375H16V22.125H5V8.375Z"
+              fill="black"
+            />
+          </svg>
+        </div>
+        <div class="postCard-top-sep"></div>
+        <div class="postCard-top-post">
+          <p>
+            <span>{{ postName }}</span>
+          </p>
+        </div>
+        <div class="postCard-top-sep"></div>
 
-      <div @click="editPost" class="postCard-top-edit">
-        <svg
-          viewBox="0 0 22 30"
-          class="postCard-bot-edit-icon"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            width="100%"
-            d="M14.575 8.25L15.75 9.425L4.4 20.75H3.25V19.6L14.575 8.25ZM19.075 0.75C18.7625 0.75 18.4375 0.875 18.2 1.1125L15.9125 3.4L20.6 8.0875L22.8875 5.8C23.375 5.3125 23.375 4.5 22.8875 4.0375L19.9625 1.1125C19.7125 0.8625 19.4 0.75 19.075 0.75ZM14.575 4.7375L0.75 18.5625V23.25H5.4375L19.2625 9.425L14.575 4.7375Z"
-            fill="black"
-          />
-        </svg>
+        <div @click="editPost" class="postCard-top-edit">
+          <svg
+            viewBox="0 0 22 30"
+            class="postCard-bot-edit-icon"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              width="100%"
+              d="M14.575 8.25L15.75 9.425L4.4 20.75H3.25V19.6L14.575 8.25ZM19.075 0.75C18.7625 0.75 18.4375 0.875 18.2 1.1125L15.9125 3.4L20.6 8.0875L22.8875 5.8C23.375 5.3125 23.375 4.5 22.8875 4.0375L19.9625 1.1125C19.7125 0.8625 19.4 0.75 19.075 0.75ZM14.575 4.7375L0.75 18.5625V23.25H5.4375L19.2625 9.425L14.575 4.7375Z"
+              fill="black"
+            />
+          </svg>
+        </div>
+      </div>
+      <hr />
+
+      <div class="postCard-bot">
+        <div @click="deleteEmployeeFromPost" class="postCard-bot-delete">
+          <svg
+            viewBox="0 0 22 30"
+            class="postCard-bot-delete-icon"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.415 10.3963L10.5 13.3113L7.57125 10.3963L5.6325 12.335L8.56125 15.25L5.64625 18.165L7.585 20.1038L10.5 17.1887L13.415 20.1038L15.3538 18.165L12.4388 15.25L15.3538 12.335L13.415 10.3963ZM15.3125 1.5L13.9375 0.125H7.0625L5.6875 1.5H0.875V4.25H20.125V1.5H15.3125ZM2.25 22.125C2.25 23.6375 3.4875 24.875 5 24.875H16C17.5125 24.875 18.75 23.6375 18.75 22.125V5.625H2.25V22.125ZM5 8.375H16V22.125H5V8.375Z"
+              fill="black"
+            />
+          </svg>
+        </div>
+
+        <div class="postCard-bot-sep"></div>
+        <div class="postCard-bot-employee">
+          <p v-if="employee !== undefined">
+            <span>{{ employee.name }}</span
+            ><span>{{ employee.surname }}</span>
+          </p>
+        </div>
+        <div class="postCard-bot-sep"></div>
+
+        <div @click="editEmployee" class="postCard-bot-edit">
+          <svg
+            viewBox="0 0 22 30"
+            class="postCard-bot-edit-icon"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              width="100%"
+              d="M14.575 8.25L15.75 9.425L4.4 20.75H3.25V19.6L14.575 8.25ZM19.075 0.75C18.7625 0.75 18.4375 0.875 18.2 1.1125L15.9125 3.4L20.6 8.0875L22.8875 5.8C23.375 5.3125 23.375 4.5 22.8875 4.0375L19.9625 1.1125C19.7125 0.8625 19.4 0.75 19.075 0.75ZM14.575 4.7375L0.75 18.5625V23.25H5.4375L19.2625 9.425L14.575 4.7375Z"
+              fill="black"
+            />
+          </svg>
+        </div>
       </div>
     </div>
-    <hr />
-
-    <div class="postCard-bot">
-      <div @click="deleteEmployeeFromPost" class="postCard-bot-delete">
-        <svg
-          viewBox="0 0 22 30"
-          class="postCard-bot-delete-icon"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.415 10.3963L10.5 13.3113L7.57125 10.3963L5.6325 12.335L8.56125 15.25L5.64625 18.165L7.585 20.1038L10.5 17.1887L13.415 20.1038L15.3538 18.165L12.4388 15.25L15.3538 12.335L13.415 10.3963ZM15.3125 1.5L13.9375 0.125H7.0625L5.6875 1.5H0.875V4.25H20.125V1.5H15.3125ZM2.25 22.125C2.25 23.6375 3.4875 24.875 5 24.875H16C17.5125 24.875 18.75 23.6375 18.75 22.125V5.625H2.25V22.125ZM5 8.375H16V22.125H5V8.375Z"
-            fill="black"
-          />
-        </svg>
-      </div>
-
-      <div class="postCard-bot-sep"></div>
-      <div class="postCard-bot-employee">
-        <p v-if="employee !== undefined">
-          <span>{{ employee.name }}</span
-          ><span>{{ employee.surname }}</span>
-        </p>
-      </div>
-      <div class="postCard-bot-sep"></div>
-
-      <div @click="editEmployee" class="postCard-bot-edit">
-        <svg
-          viewBox="0 0 22 30"
-          class="postCard-bot-edit-icon"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            width="100%"
-            d="M14.575 8.25L15.75 9.425L4.4 20.75H3.25V19.6L14.575 8.25ZM19.075 0.75C18.7625 0.75 18.4375 0.875 18.2 1.1125L15.9125 3.4L20.6 8.0875L22.8875 5.8C23.375 5.3125 23.375 4.5 22.8875 4.0375L19.9625 1.1125C19.7125 0.8625 19.4 0.75 19.075 0.75ZM14.575 4.7375L0.75 18.5625V23.25H5.4375L19.2625 9.425L14.575 4.7375Z"
-            fill="black"
-          />
-        </svg>
+    <div class="post-candidate">
+      <div class="post-candidate-name">
+        <div @click="DelCandidate" class="post-candidate-name-del">
+          <svg
+            viewBox="0 0 22 30"
+            class="postCard-bot-delete-icon"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.415 10.3963L10.5 13.3113L7.57125 10.3963L5.6325 12.335L8.56125 15.25L5.64625 18.165L7.585 20.1038L10.5 17.1887L13.415 20.1038L15.3538 18.165L12.4388 15.25L15.3538 12.335L13.415 10.3963ZM15.3125 1.5L13.9375 0.125H7.0625L5.6875 1.5H0.875V4.25H20.125V1.5H15.3125ZM2.25 22.125C2.25 23.6375 3.4875 24.875 5 24.875H16C17.5125 24.875 18.75 23.6375 18.75 22.125V5.625H2.25V22.125ZM5 8.375H16V22.125H5V8.375Z"
+              fill="black"
+            />
+          </svg>
+        </div>
+        <div class="post-candidate-name-employee">test</div>
+        <div @click="AddCandidate" class="post-candidate-add">+</div>
       </div>
     </div>
   </div>
@@ -215,7 +236,25 @@ export default {
       });
       this.$store.dispatch('updateStore');
     },
+    async DelCandidate() {
+      await VueSimpleAlert.confirm(
+        'Êtes-vous sûr de vouloir supprimer ce candidat ?'
+      ).then(() => {
+        // api.deleteEmployee(this.employeeId);
+      });
+    },
     addCandidate() {},
+    async AddCandidate() {
+      VueSimpleAlert.fire({
+        title: 'Ajouter un candidat',
+        input: 'select',
+        inputOptions: {
+          //link api//
+        },
+        inputPlaceholder: 'Selectionner un employé',
+        showCancelButton: true,
+      });
+    },
   },
 
   computed: {
@@ -293,8 +332,8 @@ svg {
 .postCard {
   /* Rectangle 1 */
 
-  height: 200px;
-  width: 400 px;
+  height: 20vh;
+  width: 22vh;
   /* Orange */
   border: 2px solid #000000;
   box-sizing: border-box;
@@ -331,7 +370,9 @@ svg {
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 1.5vh;
     }
     &-edit {
       display: flex;
@@ -378,6 +419,8 @@ svg {
     }
     &-employee {
       width: 63%;
+      font-size: 2vh;
+      font-weight: bold;
     }
     &-edit {
       display: flex;
@@ -393,6 +436,34 @@ svg {
         height: 70%;
         width: 70%;
       }
+    }
+  }
+}
+.post {
+  &-candidate {
+    height: 3vh;
+    width: 22vh;
+    display: flex;
+    font-size: 2.3vh;
+
+    &-name {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      &-del {
+        width: 20%;
+        cursor: pointer;
+      }
+      &-employee {
+        width: 80%;
+      }
+    }
+    &-add {
+      width: 15%;
+      top: 0px;
+      font-size: 2.5vh;
+      cursor: pointer;
     }
   }
 }

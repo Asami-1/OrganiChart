@@ -236,7 +236,7 @@ export default {
   /* Rectangle 1 */
   justify-content: center;
   align-content: center;
-  margin: 2em;
+  margin: 2vh;
   &-card {
     display: flex;
     justify-content: center;
@@ -244,9 +244,9 @@ export default {
     position: relative;
     flex-wrap: wrap;
     &-post {
-      width: 15%;
-      margin: 1em;
-      background: white;
+      width: 17vh;
+      margin: 3vh;
+      padding: 2vh;
     }
   }
   &-type {
