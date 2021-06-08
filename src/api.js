@@ -67,7 +67,6 @@ export default {
      * deletes an Employee
      */
     deleteEmployee(employeeID) {
-        console.log(employeeID);
         db.collection('/Employees')
             .doc(employeeID)
             .delete()
@@ -77,6 +76,16 @@ export default {
             .catch((error) => {
                 console.error('Error removing document: ', error);
             });
+    },
+
+    deletePost(postId, serviceId) {
+        db.doc('Services/' + serviceId + '/Posts/' + postId).delete().then(() => {
+            console.log('Employee successfully deleted!');
+        })
+            .catch((error) => {
+                console.error('Error removing document: ', error);
+            });
+
     },
 
     deleteEmployeeFromPost(employeeId, postId, serviceId) {

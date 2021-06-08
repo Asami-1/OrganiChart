@@ -94,12 +94,18 @@ export default {
   },
 
   methods: {
-    editPost() {},
+    async editPost() {},
+
     async deletePost() {
       await VueSimpleAlert.confirm(
         'Êtes-vous sûr de vouloir supprimer ce poste ?'
-      ).then(() => {
-        // api.deletePost(this.post);
+      ).then(async () => {
+        if (this.employee !== undefined) {
+          let data = { postId: 'NA', status: 0 };
+          await api.updateEmployee(this.employee.employeeId, data);
+        }
+        await api.deletePost(this.postId, this.serviceId);
+        this.$store.dispatch('updateStore');
       });
     },
 
@@ -141,12 +147,13 @@ export default {
         employeeNames.includes(newEmployeeName)
       ) {
         //Retrieve corresponding employee's data
-        let employeeData = this.$store.state.employees[
-          employeeSurnames.indexOf(newEmployeeSurname)
-        ];
+        let employeeData =
+          this.$store.state.employees[
+            employeeSurnames.indexOf(newEmployeeSurname)
+          ];
 
         if (this.employee !== undefined) {
-          data = { postId: 'NA' };
+          data = { postId: 'NA', status: 0 };
           await api.updateEmployee(this.employee.employeeId, data);
           data = { isOccupied: false };
           await api.updatePost(this.postId, this.serviceId, data);
