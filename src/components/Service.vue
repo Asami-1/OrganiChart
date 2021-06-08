@@ -21,6 +21,9 @@
     <button @click="clear()"></button>
     <button @click="showStore()"></button> -->
     </div>
+    <div class="service-addPost">
+      <button class="service-addPost-button" v-on:click="addPost()">+</button>
+    </div>
     <div class="service-separator"></div>
   </div>
 </template>
@@ -28,7 +31,9 @@
 
 <script>
 import PostCard from './PostCard';
-// import api from '../api';
+import VueSimpleAlert from 'vue-simple-alert';
+
+import api from '../api';
 // import { db } from '../firebase';
 // import 'firebase/firestore';
 export default {
@@ -42,8 +47,26 @@ export default {
   },
 
   methods: {
-    showStore() {
-      console.log(this.$store.state.services);
+    async addPost() {
+      let data = {};
+      data = await VueSimpleAlert.fire({
+        title: 'Ajouter un poste',
+        text: 'Nom',
+        showCancelButton: true,
+        html:
+          '<input id="swal-input1" class="swal2-input" placeholder="Nom du Poste">' +
+          '<input id="swal-input2" class="swal2-input" placeholder="Niveau du poste">',
+
+        preConfirm: () => {
+          return {
+            postName: `${document.getElementById('swal-input1').value}`,
+            postLevel: `${document.getElementById('swal-input2').value}`,
+          };
+        },
+      });
+      data = data.value;
+      console.log(data);
+      api.createPost(data.postName, data.postLevel, this.serviceName);
     },
 
     // Debugging Stuff //
@@ -243,6 +266,27 @@ export default {
     width: 90%;
     margin: 3em;
     border-bottom: 3px solid black;
+  }
+  &-addPost {
+    height: 7%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    &-button {
+      margin-top: 0.5rem;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      height: 4rem;
+      width: 5rem;
+      font-size: 2em;
+      border-radius: 3em;
+      border: 1px solid black;
+      background-color: #ffffff;
+      cursor: pointer;
+      &:focus {
+        transform: scale(1.15);
+      }
+    }
   }
 }
 </style>

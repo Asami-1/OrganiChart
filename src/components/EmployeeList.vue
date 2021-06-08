@@ -187,6 +187,8 @@ export default {
       border-radius: 3em;
       border: 1px solid black;
       background-color: #ffffff;
+      cursor: pointer;
+
       &:focus {
         transform: scale(1.15);
       }

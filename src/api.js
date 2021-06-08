@@ -63,6 +63,18 @@ export default {
                 console.error('Error saving employee: ', error);
             });
     },
+
+    createPost(postName, postLevel, serviceName) {
+        const postId = Date.now().toString();
+        db.collection('Services/' + serviceName + '/Posts').doc(postId).set({
+            isOccupied: false,
+            postCandidates: [],
+            postId: postId,
+            postLevel: postLevel,
+            postName: postName,
+
+        })
+    },
     /**
      * deletes an Employee
      */
@@ -78,9 +90,10 @@ export default {
             });
     },
 
+
     deletePost(postId, serviceId) {
         db.doc('Services/' + serviceId + '/Posts/' + postId).delete().then(() => {
-            console.log('Employee successfully deleted!');
+            console.log('Post successfully deleted!');
         })
             .catch((error) => {
                 console.error('Error removing document: ', error);
