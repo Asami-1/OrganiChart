@@ -94,7 +94,31 @@ export default {
   },
 
   methods: {
-    async editPost() {},
+    async editPost() {
+      let data = {};
+      data = await VueSimpleAlert.fire({
+        title: 'Modifier le nom du poste',
+        text: 'Nom du poste',
+        showCancelButton: true,
+        html: '<input id="swal-input1" class="swal2-input" placeholder="Nouveau nom du poste">',
+
+        preConfirm: () => {
+          return {
+            newPostName: `${document.getElementById('swal-input1').value}`,
+          };
+        },
+      });
+      const newPostName = data.value.newPostName;
+      await api.updatePost(this.postId, this.serviceId, {
+        postName: newPostName,
+      });
+      if (this.employee !== undefined) {
+        await api.updateEmployee(this.employee.employeeId, {
+          postName: newPostName,
+        });
+      }
+      this.$store.dispatch('updateStore');
+    },
 
     async deletePost() {
       await VueSimpleAlert.confirm(
@@ -314,6 +338,7 @@ svg {
       right: 0px;
       width: 18%;
       height: 100%;
+      cursor: pointer;
 
       &-icon {
         margin: auto;

@@ -29,12 +29,10 @@ const store = new Vuex.Store({
 
         async updateStore({ commit }) {
             const employees = await api.getEmployees();
-            console.log(employees)
             commit("updateEmployees", (employees));
 
             const services = await api.getServices();
 
-            console.log(services)
             commit('updateServices', services);
 
         },
