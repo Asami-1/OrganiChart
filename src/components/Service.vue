@@ -202,7 +202,6 @@ export default {
     employees() {
       return this.$store.state.employees;
     },
-
     serviceData() {
       return this.$store.state.services.filter((service) => {
         return service.serviceName == this.serviceName;

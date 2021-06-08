@@ -96,7 +96,11 @@
           </svg>
         </div>
         <div class="post-candidate-name-employee">test</div>
+        <<<<<<< HEAD
         <div @click="AddCandidate" class="post-candidate-add">+</div>
+        =======
+        <div @click="addCandidate" class="post-candidate-add">+</div>
+        >>>>>>> 0ceec97a42e4342fbc07ced3cbe970959368395f
       </div>
     </div>
   </div>
@@ -236,28 +240,40 @@ export default {
       });
       this.$store.dispatch('updateStore');
     },
-    async DelCandidate() {
+
+    async delCandidate() {
       await VueSimpleAlert.confirm(
         'Êtes-vous sûr de vouloir supprimer ce candidat ?'
       ).then(() => {
         // api.deleteEmployee(this.employeeId);
       });
     },
-    addCandidate() {},
-    async AddCandidate() {
-      VueSimpleAlert.fire({
+
+    async addCandidate() {
+      const { value: employeeId } = await VueSimpleAlert.fire({
         title: 'Ajouter un candidat',
         input: 'select',
-        inputOptions: {
-          //link api//
-        },
+        inputOptions: this.employeesOption,
         inputPlaceholder: 'Selectionner un employé',
         showCancelButton: true,
       });
+      api.addCandidate(this.postId, this.serviceId, employeeId);
     },
   },
 
   computed: {
+    employees() {
+      return this.$store.state.employees;
+    },
+
+    employeesOption() {
+      let res = {};
+      this.employees.forEach((employee) => {
+        res[employee.employeeId] = employee.surname + ' ' + employee.name;
+      });
+      return res;
+    },
+
     cardColor() {
       var color = '';
       if (!this.isOccupied) {
