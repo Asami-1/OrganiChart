@@ -82,7 +82,7 @@
     </div>
     <div class="post-candidate">
       <div class="post-candidate-name">
-        <div @click="DelCandidate" class="post-candidate-name-del">
+        <div class="post-candidate-name-del">
           <svg
             viewBox="0 0 22 30"
             class="postCard-bot-delete-icon"
@@ -96,11 +96,8 @@
           </svg>
         </div>
         <div class="post-candidate-name-employee">test</div>
-        <<<<<<< HEAD
-        <div @click="AddCandidate" class="post-candidate-add">+</div>
-        =======
+
         <div @click="addCandidate" class="post-candidate-add">+</div>
-        >>>>>>> 0ceec97a42e4342fbc07ced3cbe970959368395f
       </div>
     </div>
   </div>
@@ -241,14 +238,6 @@ export default {
       this.$store.dispatch('updateStore');
     },
 
-    async delCandidate() {
-      await VueSimpleAlert.confirm(
-        'Êtes-vous sûr de vouloir supprimer ce candidat ?'
-      ).then(() => {
-        // api.deleteEmployee(this.employeeId);
-      });
-    },
-
     async addCandidate() {
       const { value: employeeId } = await VueSimpleAlert.fire({
         title: 'Ajouter un candidat',
@@ -348,8 +337,8 @@ svg {
 .postCard {
   /* Rectangle 1 */
 
-  height: 20vh;
-  width: 22vh;
+  height: 10vh;
+  width: 11vh;
   /* Orange */
   border: 2px solid #000000;
   box-sizing: border-box;

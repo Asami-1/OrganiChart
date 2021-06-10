@@ -67,6 +67,7 @@ export default {
       data = data.value;
       console.log(data);
       api.createPost(data.postName, data.postLevel, this.serviceName);
+      this.$store.dispatch('updateStore');
     },
 
     // Debugging Stuff //
