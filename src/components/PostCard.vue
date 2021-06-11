@@ -162,9 +162,10 @@ export default {
         employeeNames.includes(newEmployeeName)
       ) {
         //Retrieve corresponding employee's data
-        let employeeData = this.$store.state.employees[
-          employeeSurnames.indexOf(newEmployeeSurname)
-        ];
+        let employeeData =
+          this.$store.state.employees[
+            employeeSurnames.indexOf(newEmployeeSurname)
+          ];
 
         if (this.employee !== undefined) {
           data = { postId: 'NA' };
@@ -301,15 +302,6 @@ hr {
   margin-block-start: 0%;
   margin-block-end: 0%;
 }
-svg {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-
 .postCard {
   /* Rectangle 1 */
 
@@ -337,14 +329,6 @@ svg {
       width: 18%;
       height: 100%;
       cursor: pointer;
-
-      &-icon {
-        margin: auto;
-        margin-bottom: 40%;
-        position: relative;
-        height: 70%;
-        width: 70%;
-      }
     }
     &-post {
       width: 63%;
@@ -360,14 +344,6 @@ svg {
       right: 0px;
       width: 18%;
       height: 100%;
-
-      &-icon {
-        margin: auto;
-        position: relative;
-        margin-bottom: 40%;
-        height: 70%;
-        width: 70%;
-      }
     }
   }
   &-bot {

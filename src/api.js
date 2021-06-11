@@ -88,7 +88,18 @@ export default {
                 console.error('Error removing document: ', error);
             });
     },
-
+    deleteService(serviceName) {
+        console.log(serviceName);
+        db.collection('/Services')
+            .doc(serviceName)
+            // .delete()
+            .then(() => {
+                console.log('Service successfully deleted!');
+            })
+            .catch((error) => {
+                console.error('Error removing document: ', error);
+            });
+    },
     deleteEmployeeFromPost(employeeId, postId, serviceId) {
         var employeeRef = db.doc('/Employees/' + employeeId);
         employeeRef.update(
