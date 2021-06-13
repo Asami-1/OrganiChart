@@ -82,7 +82,7 @@
     </div>
     <div class="post-candidate">
       <div class="post-candidate-name">
-        <div @click="DelCandidate" class="post-candidate-name-del">
+        <div @click="delCandidate" class="post-candidate-name-del">
           <svg
             viewBox="0 0 22 30"
             class="postCard-bot-delete-icon"

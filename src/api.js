@@ -88,11 +88,26 @@ export default {
                 console.error('Error removing document: ', error);
             });
     },
+    // editService(serviceName, newService, prevService, serviceLevel = 1) {
+    //     console.log(serviceName, prevService, newService);
+    //     db.collection('/Services').doc(prevService)
+    //         .set({
+    //             serviceLevel: serviceLevel,
+    //             prevService: prevService,
+    //             serviceName: newService,
+    //         })
+    //         .then(() => {
+    //             console.log('Service successfully modified!');
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error saving Service: ', error);
+    //         });
+    // },
     deleteService(serviceName) {
         console.log(serviceName);
         db.collection('/Services')
             .doc(serviceName)
-            // .delete()
+            .delete(serviceName)
             .then(() => {
                 console.log('Service successfully deleted!');
             })

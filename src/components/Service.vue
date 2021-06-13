@@ -18,7 +18,7 @@
       <div class="service-type-name">
         {{ serviceName }}
       </div>
-      <div class="service-type-edit">
+      <div @click="editService" class="service-type-edit">
         <svg
           id="icon"
           viewBox="0 0 22 30"
@@ -81,6 +81,30 @@ export default {
         api.deleteService(this.serviceName);
       });
     },
+    // async editService() {
+    //   let data = {};
+    //   let prevService = {};
+    //   data = await VueSimpleAlert.fire({
+    //     title: 'Modifier le nom du service',
+    //     text: 'Service',
+    //     showCancelButton: true,
+    //     html: '<input id="swal-input1" class="swal2-input" placeholder="Service">',
+    //     preConfirm: () => {
+    //       return {
+    //         service: `${document.getElementById('swal-input1').value}`,
+    //       };
+    //     },
+    //   });
+    //   data = data.value;
+    // if (typeof this.prevService !== 'undefined') {
+    //   console.log('case 1');
+    // } else {
+    //   console.log('case 2', prevService);
+    // }
+
+    // console.log(this.serviceName, data.service, prevService);
+    // api.editService(this.serviceName, data.service, prevService);
+    // },
     showStore() {
       console.log(this.$store.state.services);
     },
@@ -254,7 +278,7 @@ export default {
       display: inline-flex;
       width: 85%;
       height: 100%;
-      font-size: 2.5vh;
+      font-size: fit-content;
       font-weight: bold;
     }
     &-del {
