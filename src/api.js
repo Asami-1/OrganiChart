@@ -88,21 +88,17 @@ export default {
                 console.error('Error removing document: ', error);
             });
     },
-    // editService(serviceName, newService, prevService, serviceLevel = 1) {
-    //     console.log(serviceName, prevService, newService);
-    //     db.collection('/Services').doc(prevService)
-    //         .set({
-    //             serviceLevel: serviceLevel,
-    //             prevService: prevService,
-    //             serviceName: newService,
-    //         })
-    //         .then(() => {
-    //             console.log('Service successfully modified!');
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error saving Service: ', error);
-    //         });
-    // },
+    editService(serviceName, newService) {
+        var test = {}
+        test = db.collection('/Services').where('serviceName', "==", serviceName).get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.id, " => ", doc.data(), newService)
+                    test = doc.data()
+                    console.log(test.serviceName)
+                });
+            })
+    },
     deleteService(serviceName) {
         console.log(serviceName);
         db.collection('/Services')

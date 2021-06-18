@@ -81,30 +81,23 @@ export default {
         api.deleteService(this.serviceName);
       });
     },
-    // async editService() {
-    //   let data = {};
-    //   let prevService = {};
-    //   data = await VueSimpleAlert.fire({
-    //     title: 'Modifier le nom du service',
-    //     text: 'Service',
-    //     showCancelButton: true,
-    //     html: '<input id="swal-input1" class="swal2-input" placeholder="Service">',
-    //     preConfirm: () => {
-    //       return {
-    //         service: `${document.getElementById('swal-input1').value}`,
-    //       };
-    //     },
-    //   });
-    //   data = data.value;
-    // if (typeof this.prevService !== 'undefined') {
-    //   console.log('case 1');
-    // } else {
-    //   console.log('case 2', prevService);
-    // }
-
-    // console.log(this.serviceName, data.service, prevService);
-    // api.editService(this.serviceName, data.service, prevService);
-    // },
+    async editService() {
+      let data = {};
+      data = await VueSimpleAlert.fire({
+        title: 'Modifier le nom du service',
+        text: 'Service',
+        showCancelButton: true,
+        html: '<input id="swal-input1" class="swal2-input" placeholder="Service">',
+        preConfirm: () => {
+          return {
+            service: `${document.getElementById('swal-input1').value}`,
+          };
+        },
+      });
+      data = data.value;
+      // console.log(this.serviceName, data.service);
+      api.editService(this.serviceName, data.service);
+    },
     showStore() {
       console.log(this.$store.state.services);
     },
