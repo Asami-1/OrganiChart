@@ -88,22 +88,16 @@ export default {
                 console.error('Error removing document: ', error);
             });
     },
-    editService(serviceName, newService) {
-        var test = {}
-        test = db.collection('/Services').where('serviceName', "==", serviceName).get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    console.log(doc.id, " => ", doc.data(), newService)
-                    test = doc.data()
-                    console.log(test.serviceName)
-                });
+    editService(serviceId, newService) {
+        db.collection('Services').doc(serviceId).get()
+            .then((service) => {
+                service.ref.update({ serviceName: newService })
             })
     },
-    deleteService(serviceName) {
-        console.log(serviceName);
-        db.collection('/Services')
-            .doc(serviceName)
-            .delete(serviceName)
+    deleteService(serviceId) {
+        db.collection('/Services/')
+            .doc(serviceId)
+            .delete(serviceId)
             .then(() => {
                 console.log('Service successfully deleted!');
             })
@@ -131,7 +125,6 @@ export default {
         let userRef = db.doc('/Employees/' + employeeId);
         await userRef.update(data);
     },
-
 
     async updatePost(postId, serviceId, data) {
         var postRef = db.doc('Services/' + serviceId + '/Posts/' + postId);
@@ -340,26 +333,26 @@ export default {
 
 
 
-    async getServicePosts(serviceName) {
+    async getServicePosts(serviceId) {
         let res = [];
-        await db.doc('/Services/' + serviceName).collection('Posts')
+        await db.doc('/Services/' + serviceId).collection('Posts')
             .get()
             .then((posts) => {
-
                 posts.forEach(post => {
                     res.push(post.data());
                 });
             })
         return res;
     },
+
     async getServices() {
         let res = [];
         await db.collection("/Services").get().then(
             (services) => {
                 services.forEach(async (service) => {
                     let currentService = service.data();
-                    let servicePosts = await this.getServicePosts(currentService.serviceName);
-                    res.push({ serviceName: currentService.serviceName, posts: servicePosts });
+                    let servicePosts = await this.getServicePosts(service.id);
+                    res.push({ serviceName: currentService.serviceName, posts: servicePosts, serviceId: service.id });
                 });
             }
         )

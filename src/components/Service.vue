@@ -49,8 +49,8 @@
       ></PostCard>
       <!-- Debbugging purposes -->
       <!-- <button @click="activate()"></button>
-    <button @click="clear()"></button>
-    <button @click="showStore()"></button> -->
+    <button @click="clear()"></button>-->
+      <button @click="showStore()"></button>
     </div>
     <div class="service-separator"></div>
   </div>
@@ -78,7 +78,7 @@ export default {
       await VueSimpleAlert.confirm(
         'Êtes-vous sûr de vouloir supprimer ce service ?'
       ).then(() => {
-        api.deleteService(this.serviceName);
+        api.deleteService(this.serviceId);
       });
     },
     async editService() {
@@ -95,134 +95,12 @@ export default {
         },
       });
       data = data.value;
-      // console.log(this.serviceName, data.service);
-      api.editService(this.serviceName, data.service);
+      api.editService(this.serviceId, data.service);
+      this.serviceName = data.service;
     },
     showStore() {
       console.log(this.$store.state.services);
     },
-
-    // Debugging Stuff //
-    // clear() {
-    //   db.collection('/Employees')
-    //     .get()
-    //     .then((employees) => {
-    //       employees.forEach((employee) => {
-    //         employee.ref.update({
-    //           status: 0,
-    //         });
-    //       });
-    //     });
-    //   db.collection('/Services')
-    //     .get()
-    //     .then((services) => {
-    //       services.forEach((service) => {
-    //         service.ref
-    //           .collection('/Posts')
-    //           .get()
-    //           .then((posts) => {
-    //             posts.forEach((post) => {
-    //               console.log(post.ref.postName);
-    //               post.ref.update({
-    //                 test: true,
-    //                 isOccupied: false,
-    //               });
-    //             });
-    //           });
-    //       });
-    //     });
-    // },
-
-    // activate() {
-    //   var lockedId = [];
-    //   this.employees.forEach(async (employee) => {
-    //     await db
-    //       .doc(employee.service)
-    //       .get()
-    //       .then(async (service) => {
-    //         service.ref
-    //           .collection('/Posts')
-    //           .get()
-    //           .then(async (postes) => {
-    //             var found = false;
-    //             postes.forEach(async (poste) => {
-    //               if (
-    //                 !lockedId.includes(poste.data().postId) &&
-    //                 !poste.data().isOccupied &&
-    //                 poste.data().postName == employee.postName &&
-    //                 !found
-    //               ) {
-    //                 found = true;
-    //                 lockedId.push(poste.data().postId);
-    //                 await poste.ref.update({
-    //                   isOccupied: true,
-    //                 });
-    //                 let userRef = db.doc('/Employees/' + employee.employeeId);
-    //                 userRef.update({
-    //                   status: 1,
-    //                   postId: poste.data().postId,
-    //                 });
-    //               }
-    //             });
-    //           });
-    //       });
-    //   });
-    //   db.collection('Employees')
-    //     .where('serviceId', '==', 'CONTROLE QUALITE')
-    //     .get()
-    //     .then(async (employees) => {
-    //       employees.forEach(async (employee) => {
-    //         console.log(
-    //           "Recherche du poste de l'employé ",
-    //           employee.data().surname,
-    //           '...\n'
-    //         );
-    //         console.log();
-    //         // await db
-    //         //   .doc(employee.data().service)
-    //         //   .get()
-    //         //   .then(async (service) => {
-    //         //     var found = false;
-    //         //     await service.ref
-    //         //       .collection('Posts')
-    //         //       .get()
-    //         //       .then(async (postes) => {
-    //         //         postes.forEach(async (poste) => {
-    //         //           if (
-    //         //             !this.usedId.includes(poste.id) &&
-    //         //             !found &&
-    //         //             !poste.data().isOccupied &&
-    //         //             poste.data().postName == employee.data().postName &&
-    //         //             employee.data().status == 0
-    //         //           ) {
-    //         //             found = true;
-    //         //             await poste.ref.update({
-    //         //               isOccupied: true,
-    //         //             });
-    //         //             await employee.ref.update({
-    //         //               status: 1,
-    //         //               postId: poste.id,
-    //         //             });
-    //         //             console.log(this.usedId);
-    //         //             this.usedId.push(poste.id);
-    //         //             console.log(
-    //         //               "L'employé",
-    //         //               employee.data().surname,
-    //         //               'a le statut ',
-    //         //               employee.data().status,
-    //         //               'a été attribué au poste : ',
-    //         //               poste.data().postName,
-    //         //               'du service : ',
-    //         //               service.data().serviceName,
-    //         //               '\n'
-    //         //             );
-    //         //           }
-    //         //         });
-    //         //       });
-    //         //   });
-    //       });
-    //     });
-    // },
 
     getCurrentEmployee(postId) {
       return this.$store.state.employees.filter((employee) => {
@@ -237,7 +115,7 @@ export default {
     },
     serviceData() {
       return this.$store.state.services.filter((service) => {
-        return service.serviceName == this.serviceName;
+        return service.serviceId == this.serviceId;
       })[0];
     },
     posts: {
@@ -245,7 +123,7 @@ export default {
         let res = [];
         this.serviceData.posts.forEach((post) => {
           let employee = this.getCurrentEmployee(post.postId);
-          post.serviceId = this.serviceData.serviceName;
+          post.serviceId = this.serviceData.serviceId;
           res.push({ employee: employee, post: post });
         });
         return res;
@@ -257,6 +135,9 @@ export default {
 
   props: {
     serviceName: {
+      Type: String,
+    },
+    serviceId: {
       Type: String,
     },
   },
