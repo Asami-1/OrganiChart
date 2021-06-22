@@ -111,6 +111,29 @@ export default {
 
     },
 
+    editService(serviceName, newService) {
+        var test = {}
+        test = db.collection('/Services').where('serviceName', "==", serviceName).get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.id, " => ", doc.data(), newService)
+                    test = doc.data()
+                    console.log(test.serviceName)
+                });
+            })
+    },
+    deleteService(serviceName) {
+        console.log(serviceName);
+        db.collection('/Services')
+            .doc(serviceName)
+            .delete(serviceName)
+            .then(() => {
+                console.log('Service successfully deleted!');
+            })
+            .catch((error) => {
+                console.error('Error removing document: ', error);
+            });
+    },
     deleteEmployeeFromPost(employeeId, postId, serviceId) {
         var employeeRef = db.doc('/Employees/' + employeeId);
         employeeRef.update(

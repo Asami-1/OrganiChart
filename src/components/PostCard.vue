@@ -82,7 +82,7 @@
     </div>
     <div class="post-candidate">
       <div class="post-candidate-name">
-        <div class="post-candidate-name-del">
+        <div @click="delCandidate" class="post-candidate-name-del">
           <svg
             viewBox="0 0 22 30"
             class="postCard-bot-delete-icon"
@@ -325,15 +325,6 @@ hr {
   margin-block-start: 0%;
   margin-block-end: 0%;
 }
-svg {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-
 .postCard {
   /* Rectangle 1 */
 
@@ -361,14 +352,6 @@ svg {
       width: 18%;
       height: 100%;
       cursor: pointer;
-
-      &-icon {
-        margin: auto;
-        margin-bottom: 40%;
-        position: relative;
-        height: 70%;
-        width: 70%;
-      }
     }
     &-post {
       width: 63%;
