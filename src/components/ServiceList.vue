@@ -10,8 +10,9 @@
     <div class="services-body">
       <Service
         v-for="service in services"
-        :key="service.serviceName"
+        :key="service.serviceId"
         :service-name="service.serviceName"
+        :service-id="service.serviceId"
       ></Service>
     </div>
   </div>
