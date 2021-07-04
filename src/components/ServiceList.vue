@@ -1,6 +1,8 @@
+
 <template>
   <div class="services">
     <div class="services-header">
+      <!-- TODO : Fix the drop down or use another one -->
       <vue-dropdown
         @setSelectedOption="updateSelectedService($event)"
         :config="config"
@@ -19,16 +21,20 @@
 </template>
 
 <script>
-//TODO: Add possibility to add a service on the header
 import VueDropdown from 'vue-dynamic-dropdown';
 import Service from './Service';
 
 export default {
+  /**
+   * Service List component, Contains Services and a dropdown
+   *
+   */
   name: 'ServiceList',
   data() {
     return {
       // Necessary to fix a key to the dropdown
       dropdownKey: 0,
+      // Dropdown option
       config: {
         options: [],
         prefix: 'Sélectionner un service',
@@ -43,13 +49,21 @@ export default {
   },
 
   methods: {
+    /**
+     * Updates the selected service in the dropdown
+     * Triggers whenever an item is selected
+     */
     updateSelectedService($event) {
       this.config.prefix = $event.value;
     },
   },
 
   computed: {
-    // this is temporary for debugging purpose
+    /**
+     * Local store's services
+     *
+     * @returns a list of object with services
+     */
     services() {
       return this.$store.state.services;
     },
@@ -59,6 +73,9 @@ export default {
   },
 
   watch: {
+    /**
+     * Updates the dropdown's options whenever an update occurs in the local store.
+     */
     services() {
       this.config.options = [];
       this.services.forEach((service) => {

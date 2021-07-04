@@ -4,6 +4,9 @@ import Statistiques from '../components/Statistiques.vue';
 
 Vue.use(VueRouter);
 
+/**
+ * Router of the application. Links components to paths and redirects in a SPA fashion.
+ */
 const routes = [
 
   {

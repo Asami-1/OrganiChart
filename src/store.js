@@ -6,7 +6,9 @@ Vue.use(Vuex);
 
 /* eslint-disable no-param-reassign */
 /**
- * Creates a global store accessible from everywhere in teh
+ * Creates a global store accessible from everywhere in the application. 
+ * Only the "actions" functions should be called.
+ * 
  */
 const store = new Vuex.Store({
     state: {
@@ -16,17 +18,31 @@ const store = new Vuex.Store({
         employees: [],
     },
     mutations: {
+        /**
+         *  Updates the employees of the store.
+         * 
+         * @param {*} state 
+         * @param {*} newEmployees 
+         */
         updateEmployees(state, newEmployees) {
             state.employees = newEmployees;
         },
 
+        /**
+         * Updates the services and the posts of the store
+         * 
+         * @param {*} state 
+         * @param {*} newServices 
+         */
         updateServices(state, newServices) {
             state.services = newServices;
         }
 
     },
     actions: {
-
+        /**
+         * Updates the local store 
+         */
         async updateStore({ commit }) {
             const employees = await api.getEmployees();
             commit("updateEmployees", (employees));

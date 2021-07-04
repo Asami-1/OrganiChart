@@ -1,24 +1,12 @@
 import { db } from './firebase';
 import firebase from 'firebase/app';
-import 'firebase/firestore';
 
 export default {
-
-
-    data() {
-        return {
-            employees: null,
-            services: null,
-        };
-    },
-
-    firestore() {
-        return {
-            employees: db.collection('/Employees'),
-            services: db.collection('/Services'),
-        };
-    },
-
+    /**
+     * Employees getter
+     * 
+     * @returns a list of objects with the employees data
+     */
     async getEmployees() {
         let res = [];
         await db.collection('/Employees').get().then(employees => {
@@ -29,20 +17,31 @@ export default {
         });
         return res
     },
+
+    /**
+     * Employee getter
+     * 
+     * @param {String} employeeId 
+     * @returns an object with the data
+     */
     async getEmployee(employeeId) {
         var employeeData;
         await db.doc('/Employees/' + employeeId).get().then((employee) => {
             employeeData = employee.data();
         })
-        // console.log(employeeData)
         return Promise.resolve(employeeData);
 
 
     },
 
-
     /**
-     * create an employee
+     * Creates an employee 
+     * 
+     * @param {boolean} isCandidate 
+     * @param {String} name 
+     * @param {String} surname 
+     * @param {String} postName 
+     * @param {Number} status 
      */
     createEmployee(
         isCandidate = false,
@@ -63,7 +62,6 @@ export default {
                 surname: surname,
             })
             .then((employee) => {
-                console.log(employee.id, employee.path);
                 db.doc(employee.path).update({
                     employeeId: employee.id,
                 });
@@ -74,6 +72,13 @@ export default {
             });
     },
 
+    /**
+     * Creates a post 
+     * 
+     * @param {String} postName 
+     * @param {String} postLevel 
+     * @param {String} serviceName 
+     */
     createPost(postName, postLevel, serviceName) {
         const postId = Date.now().toString();
         db.collection('Services/' + serviceName + '/Posts').doc(postId).set({
@@ -85,8 +90,11 @@ export default {
 
         })
     },
+
     /**
-     * deletes an Employee
+     * Deletes an employee
+     * 
+     * @param {String} employeeID 
      */
     deleteEmployee(employeeID) {
         db.collection('/Employees')
@@ -100,7 +108,12 @@ export default {
             });
     },
 
-
+    /**
+     * Deletes a post
+     * 
+     * @param {String} postId 
+     * @param {String} serviceId 
+     */
     deletePost(postId, serviceId) {
         db.doc('Services/' + serviceId + '/Posts/' + postId).delete().then(() => {
             console.log('Post successfully deleted!');
@@ -111,13 +124,24 @@ export default {
 
     },
 
-
+    /**
+     * Edits a service
+     * 
+     * @param {String} serviceId 
+     * @param {String} newService 
+     */
     editService(serviceId, newService) {
         db.collection('Services').doc(serviceId).get()
             .then((service) => {
                 service.ref.update({ serviceName: newService })
             })
     },
+
+    /**
+     * Deletes a services
+     * 
+     * @param {String} serviceId 
+     */
     deleteService(serviceId) {
         db.collection('/Services/')
             .doc(serviceId)
@@ -129,6 +153,14 @@ export default {
                 console.error('Error removing document: ', error);
             });
     },
+
+    /**
+     * Take out an employee from the given post.
+     * 
+     * @param {String} employeeId 
+     * @param {String} postId 
+     * @param {String} serviceId 
+     */
     deleteEmployeeFromPost(employeeId, postId, serviceId) {
         var employeeRef = db.doc('/Employees/' + employeeId);
         employeeRef.update(
@@ -145,18 +177,35 @@ export default {
             }
         )
     },
+
+    /**
+     * Employee update
+     * 
+     * @param {String} employeeId 
+     * @param {*} data 
+     */
     async updateEmployee(employeeId, data) {
         let userRef = db.doc('/Employees/' + employeeId);
         await userRef.update(data);
     },
 
+    /**
+     * Post update
+     * 
+     * @param {String} postId 
+     * @param {String} serviceId 
+     * @param {*} data 
+     */
     async updatePost(postId, serviceId, data) {
         var postRef = db.doc('Services/' + serviceId + '/Posts/' + postId);
         await postRef.update(data);
     },
-    //TODO Retrieve the lowest service level and set the created one's to retrievedLevel + 1
+
     /**
-     * creates a service
+     * Creates a service
+     * 
+     * @param {Number} serviceLevel 
+     * @param {String} serviceName 
      */
     createService(serviceLevel = 1, serviceName) {
         db.collection('/Services')
@@ -173,37 +222,11 @@ export default {
             });
     },
 
-    //TODO implement it
-    /**
-     * create an employee
-     */
-    // createPost(postLevel = 1, postName) {
-    //   db.collection('/Posts')
-    //     .add({
-    //       isCandidate: isCandidate,
-    //       name: name,
-    //       postId: undefined,
-    //       postName: postName,
-    //       service: undefined,
-    //       serviceId: undefined,
-    //       status: status,
-    //       surname: surname,
-    //     })
-    //     .then(() => {
-    //       console.log('Employee successfully added!');
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error saving employee: ', error);
-    //     });
-    // },
-
-
 
 
     async addCandidate(postId, serviceId, employeeId) {
         this.updateEmployee(employeeId, { isCandidate: true });
         var employeeData = await this.getEmployee(employeeId);
-        console.log('Services/' + serviceId + '/Posts/' + postId)
         var postRef = db.doc('Services/' + serviceId + '/Posts/' + postId);
         postRef.update({
             postCandidates: firebase.firestore.FieldValue.arrayUnion(employeeData)
@@ -211,10 +234,48 @@ export default {
 
     },
 
-
-    //                                     UNUSED STUFF FOR DEVELOPMENT                     //
     /**
-     * Shows store info on the console
+    * Service getter
+    * Gets the posts of a given service
+    * 
+    * @param {String} serviceId 
+    * @returns a list of objects
+    */
+    async getServicePosts(serviceId) {
+        let res = [];
+        await db.doc('/Services/' + serviceId).collection('Posts')
+            .get()
+            .then((posts) => {
+                posts.forEach(post => {
+                    res.push(post.data());
+                });
+            })
+        return res;
+    },
+
+    /**
+     * Services getter
+     * 
+     * @returns a list of objects
+     */
+    async getServices() {
+        let res = [];
+        await db.collection("/Services").get().then(
+            (services) => {
+                services.forEach(async (service) => {
+                    let currentService = service.data();
+                    let servicePosts = await this.getServicePosts(service.id);
+                    res.push({ serviceName: currentService.serviceName, posts: servicePosts, serviceId: service.id });
+                });
+            }
+        )
+        return res;
+    },
+
+    //-------------------------------------------------------------------------- DEBBUGING PURPOSES -----------------------------------------------------------------------------//
+
+    /**
+     * Shows the back-end database info in the console
      */
     getStoreInfo() {
         db.collection('/Employees')
@@ -290,7 +351,6 @@ export default {
                                                 serviceId: service.id,
                                             });
                                             console.log(employee.data().postName);
-                                            console.log('found it!!');
                                             poste.ref.update({
                                                 isOccupied: true,
                                             });
@@ -352,35 +412,5 @@ export default {
                         });
                 });
             });
-    },
-
-
-
-
-    async getServicePosts(serviceId) {
-        let res = [];
-        await db.doc('/Services/' + serviceId).collection('Posts')
-            .get()
-            .then((posts) => {
-                posts.forEach(post => {
-                    res.push(post.data());
-                });
-            })
-        return res;
-    },
-
-    async getServices() {
-        let res = [];
-        await db.collection("/Services").get().then(
-            (services) => {
-                services.forEach(async (service) => {
-                    let currentService = service.data();
-                    let servicePosts = await this.getServicePosts(service.id);
-                    res.push({ serviceName: currentService.serviceName, posts: servicePosts, serviceId: service.id });
-                });
-            }
-        )
-        console.log(res);
-        return res;
     },
 };

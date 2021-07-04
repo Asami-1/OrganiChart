@@ -45,6 +45,10 @@
 </template>
 <script>
 export default {
+  /**
+   * Navbar component
+   * Only has visual elements
+   */
   name: 'Navbar',
 };
 </script>

@@ -10,8 +10,8 @@
     </div>
 
     <div class="list-center">
-      <!-- <ul class="list-center-employees"> -->
-      <EmployeeCard class="list-center-card"
+      <EmployeeCard
+        class="list-center-card"
         v-for="employee in filteredEmployees"
         :key="employee.employeeId"
         :employee-id="employee.employeeId"
@@ -20,7 +20,6 @@
         :employee-post="employee.postName"
         :employee-status="employee.status"
       />
-      <!-- </ul> -->
     </div>
     <div class="list-bottom">
       <button class="list-bottom-add" v-on:click="AddEmployee()">+</button>
@@ -41,6 +40,12 @@ import SearchBar from './SearchBar';
 Vue.use(VueSimpleAlert);
 /* eslint-disable */
 export default {
+  /**
+   * Employee list component.
+   * Includes the SearchBar, the add employee button and a list of EmployeeCard.
+   *
+   */
+
   name: 'EmployeeList',
 
   data() {
@@ -59,10 +64,18 @@ export default {
   },
 
   methods: {
+    /**
+     * Updates the searched text
+     *
+     * @param {String} search
+     */
     updateSearchedEmployees(search) {
       this.searchedEmployees = search;
     },
 
+    /**
+     * Add employee function
+     */
     async AddEmployee() {
       let data = {};
       data = await VueSimpleAlert.fire({
@@ -81,12 +94,16 @@ export default {
         },
       });
       data = data.value;
-      console.log(data.surname);
       api.createEmployee(false, data.name, data.surname);
     },
   },
 
   computed: {
+    /**
+     * Employees filtered with respect to the searched text
+     *
+     * @returns a list of employee objects.
+     */
     filteredEmployees() {
       return this.employees.filter((employee) => {
         let name = employee.name;
@@ -128,11 +145,11 @@ export default {
   flex-direction: column;
   flex-wrap: wrap;
   overflow: hidden;
-  @media (max-width: 1024px){
-    width:30vh;
+  @media (max-width: 1024px) {
+    width: 30vh;
   }
-  @media (max-width: 768px){
-    width:25vh;
+  @media (max-width: 768px) {
+    width: 25vh;
   }
 
   &-header {

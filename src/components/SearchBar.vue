@@ -11,6 +11,9 @@
 </template>
 <script>
 export default {
+  /**
+   * Search bar component.
+   */
   name: 'SearchBar',
   data() {
     return {
@@ -23,7 +26,7 @@ export default {
      * Sends the filtering text to the parent component
      */
     async filter() {
-      await this.$emit('update', this.search);
+      this.$emit('update', this.search);
     },
   },
 };
@@ -31,10 +34,6 @@ export default {
 
 <style lang="scss" scoped>
 .searchBar {
-  // height: 100px;
-  // width: 100px;
-  // display: flex;
-  // flex-direction: row;
   &-input {
     // font-weight: 550;
     opacity: 0.5;
@@ -44,8 +43,6 @@ export default {
     &:focus {
       transform: scale(1.1);
     }
-    // height: 100%;
-    // padding-left: 20px;
   }
 }
 </style>

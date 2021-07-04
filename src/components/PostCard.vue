@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    <div :style="{ 'background-color': cardColor }" class="postCard">
+    <div :style="cardColor" class="postCard">
       <div class="postCard-top">
         <div @click="deletePost" class="postCard-top-delete">
           <svg
@@ -41,7 +41,7 @@
       <hr />
 
       <div class="postCard-bot">
-        <div @click="deleteEmployeeFromPost" class="postCard-bot-delete">
+        <div @click="deleteCurrentEmployee" class="postCard-bot-delete">
           <svg
             viewBox="0 0 22 30"
             class="postCard-bot-delete-icon"
@@ -80,7 +80,8 @@
         </div>
       </div>
     </div>
-    <div class="post-candidate">
+    <!-- TODO : Candidate functionnality 
+      <div class="post-candidate">
       <div class="post-candidate-name">
         <div class="post-candidate-name-del">
           <svg
@@ -98,7 +99,7 @@
         <div class="post-candidate-name-employee">test</div>
         <div @click="addCandidate" class="post-candidate-add">+</div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -108,6 +109,10 @@
 import VueSimpleAlert from 'vue-simple-alert';
 import api from '../api';
 export default {
+  /**
+   * Post Card component
+   * has a name and an employee, each are editable/deletable.
+   */
   name: 'PostCard',
 
   data() {
@@ -115,6 +120,9 @@ export default {
   },
 
   methods: {
+    /**
+     * Handler for the post's name edition
+     */
     async editPost() {
       let data = {};
       data = await VueSimpleAlert.fire({
@@ -141,6 +149,9 @@ export default {
       this.$store.dispatch('updateStore');
     },
 
+    /**
+     * Handler for post deletion
+     */
     async deletePost() {
       await VueSimpleAlert.confirm(
         'Êtes-vous sûr de vouloir supprimer ce poste ?'
@@ -184,8 +195,10 @@ export default {
       this.$store.dispatch('updateStore');
     },
 
-    // faire en plus propre si temps il y a
-    async deleteEmployeeFromPost() {
+    /**
+     * Handler for employee deletion
+     */
+    async deleteCurrentEmployee() {
       await VueSimpleAlert.confirm(
         "Êtes-vous sûr de vouloir retirer l'employé de ce poste ?"
       ).then(() => {
@@ -198,6 +211,9 @@ export default {
       this.$store.dispatch('updateStore');
     },
 
+    /**
+     * Handler for candidate deletion
+     */
     async delCandidate() {
       await VueSimpleAlert.confirm(
         'Êtes-vous sûr de vouloir supprimer ce candidat ?'
@@ -206,6 +222,9 @@ export default {
       });
     },
 
+    /**
+     * Handler for candidate addition
+     */
     async addCandidate() {
       const { value: employeeId } = await VueSimpleAlert.fire({
         title: 'Ajouter un candidat',
@@ -219,10 +238,20 @@ export default {
   },
 
   computed: {
+    /**
+     * Local store's employees
+     */
     employees() {
       return this.$store.state.employees;
     },
 
+    /**
+     * List the local store's employees' name and surname
+     * The index of the array correspond to the employee's ID
+     * //TODO : A more optimal implementation
+     *
+     * @returns a dictionnary < employeeId : employeeName >
+     */
     employeesOption() {
       let res = {};
       this.employees.forEach((employee) => {
@@ -231,21 +260,24 @@ export default {
       return res;
     },
 
+    /**
+     * Color of the card. Depends on the employee's status.
+     */
     cardColor() {
       var color = '';
-      if (!this.isOccupied) {
-        color = '#FFFAF0';
-      } else if (this.employee !== undefined) {
-        if (this.employee.employeeStatus == '1') {
+      if (this.employee !== undefined) {
+        if (this.employee.status == '1') {
           color = '#7FFF00';
-        } else if (this.employee.employeeStatus == '2') {
+        } else if (this.employee.status == '2') {
           color = '#FF8C00';
-        } else if (this.employee.employeeStatus == '3') {
+        } else if (this.employee.status == '3') {
           color = '#F08080';
         }
+      } else {
+        color = '#FFFAF0';
       }
 
-      return color;
+      return { 'background-color': color };
     },
   },
 

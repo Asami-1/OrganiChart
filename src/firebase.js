@@ -1,3 +1,7 @@
+/**
+ * This file links the application with the firebase backend, exporting the firestore realtime database 
+ */
+
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 

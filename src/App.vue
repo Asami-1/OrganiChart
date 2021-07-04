@@ -1,3 +1,4 @@
+
 <template>
   <div id="app">
     <Navbar> </Navbar>
@@ -8,25 +9,19 @@
 </template>
 
 <script>
-import { db } from './firebase';
-import 'firebase/firestore';
 import Navbar from './components/Navbar';
 import EmployeeList from './components/EmployeeList';
 import ServiceList from './components/ServiceList';
 
 export default {
+  /**
+   * Main component loaded in the #app div in the ./public/index.html by using  the ./main.js script
+   */
   name: 'App',
   components: {
     ServiceList,
     Navbar,
     EmployeeList,
-  },
-
-  firestore() {
-    return {
-      employees: db.collection('/Employees'),
-      services: db.collection('/Services'),
-    };
   },
 };
 </script>

@@ -51,6 +51,16 @@
 import VueSimpleAlert from 'vue-simple-alert';
 import api from '../api';
 export default {
+  /**
+   * Employee card component. The employee card shows information about the employee (name, surname, currentPost, status).
+   * the color of the card depends on the employee's status :
+   *
+   * 0 : blank  ->  no post assigned
+   * 1 : green  ->  post assigned
+   * 2 : orange ->  post assigned, but will leave soon
+   * 3 : red  ->  post assigned but will leave imminently
+   *
+   */
   name: 'employeeCard',
   data() {
     return {};
@@ -62,7 +72,7 @@ export default {
       api.updateEmployee(this.employeeId, data);
     },
     /**
-     * deletes an Employee
+     * deletes the employee
      */
     async deleteEmployee() {
       await VueSimpleAlert.confirm(
@@ -74,6 +84,10 @@ export default {
   },
 
   computed: {
+    /**
+     * Color of the card.
+     * @returns a CSS directive
+     */
     employeeColor() {
       var bgColor = '';
       if (this.employeeStatus == '0') {
@@ -119,7 +133,7 @@ export default {
 .card {
   width: 80%;
   padding: 1vw;
-  margin:1vh;
+  margin: 1vh;
   border: 1px solid black;
   border-radius: 10px;
   position: relative;

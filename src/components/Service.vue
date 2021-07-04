@@ -47,9 +47,7 @@
         :postCandidates="post.post.postCandidates"
         :isOccupied="post.post.isOccupied"
       ></PostCard>
-      <!-- Debbugging purposes -->
-      <!-- <button @click="activate()"></button>
-    <button @click="clear()"></button>-->
+
       <button @click="showStore()"></button>
     </div>
     <div class="service-addPost">
@@ -64,9 +62,13 @@
 import PostCard from './PostCard';
 import VueSimpleAlert from 'vue-simple-alert';
 import api from '../api';
-// import { db } from '../firebase';
-// import 'firebase/firestore';
+
 export default {
+  /**
+   *
+   * Service component
+   * Contains PostCards associated to the service
+   */
   name: 'Service',
 
   data() {
@@ -77,6 +79,9 @@ export default {
   },
 
   methods: {
+    /**
+     * Handler for post addition
+     */
     async addPost() {
       let data = {};
       data = await VueSimpleAlert.fire({
@@ -95,11 +100,13 @@ export default {
         },
       });
       data = data.value;
-      console.log(data);
       api.createPost(data.postName, data.postLevel, this.serviceName);
       this.$store.dispatch('updateStore');
     },
 
+    /**
+     * Handler for service deletion
+     */
     async deleteService() {
       await VueSimpleAlert.confirm(
         'Êtes-vous sûr de vouloir supprimer ce service ?'
@@ -107,6 +114,10 @@ export default {
         api.deleteService(this.serviceId);
       });
     },
+
+    /**
+     * Handler for post service
+     */
     async editService() {
       let data = {};
       data = await VueSimpleAlert.fire({
@@ -124,10 +135,13 @@ export default {
       api.editService(this.serviceId, data.service);
       this.serviceName = data.service;
     },
-    showStore() {
-      console.log(this.$store.state.services);
-    },
 
+    /**
+     * Gets the current employee occupying the post.
+     *
+     * @param {String} postId
+     * @returns an object with the employee
+     */
     getCurrentEmployee(postId) {
       return this.$store.state.employees.filter((employee) => {
         return employee.postId == postId;
@@ -136,14 +150,29 @@ export default {
   },
 
   computed: {
+    /**
+     * Employees from the local store
+     */
     employees() {
       return this.$store.state.employees;
     },
+
+    /**
+     * Data associated to the service
+     *
+     * @returns an object with a list of posts and a name associated to the service
+     */
     serviceData() {
       return this.$store.state.services.filter((service) => {
         return service.serviceId == this.serviceId;
       })[0];
     },
+
+    /**
+     * Posts associated with their employee
+     *
+     * @returns a list of objects, where each object has a post and its employee as attributes
+     */
     posts: {
       get: function () {
         let res = [];
@@ -154,7 +183,7 @@ export default {
         });
         return res;
       },
-      // setter
+      // setter needed for the getter to work
       set: function () {},
     },
   },
