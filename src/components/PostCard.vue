@@ -96,7 +96,6 @@
           </svg>
         </div>
         <div class="post-candidate-name-employee">test</div>
-
         <div @click="addCandidate" class="post-candidate-add">+</div>
       </div>
     </div>
@@ -199,6 +198,14 @@ export default {
       this.$store.dispatch('updateStore');
     },
 
+    async delCandidate() {
+      await VueSimpleAlert.confirm(
+        'Êtes-vous sûr de vouloir supprimer ce candidat ?'
+      ).then(() => {
+        // api.deleteEmployee(this.employeeId);
+      });
+    },
+
     async addCandidate() {
       const { value: employeeId } = await VueSimpleAlert.fire({
         title: 'Ajouter un candidat',
@@ -272,6 +279,8 @@ export default {
 </script>
 
 
+
+
 <style lang="scss" scoped>
 p span {
   display: block;
@@ -286,11 +295,20 @@ hr {
   margin-block-start: 0%;
   margin-block-end: 0%;
 }
+svg {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .postCard {
   /* Rectangle 1 */
 
-  height: 10vh;
-  width: 11vh;
+  height: 20vh;
+  width: 22vh;
   /* Orange */
   border: 2px solid #000000;
   box-sizing: border-box;
@@ -313,6 +331,14 @@ hr {
       width: 18%;
       height: 100%;
       cursor: pointer;
+
+      &-icon {
+        margin: auto;
+        margin-bottom: 40%;
+        position: relative;
+        height: 70%;
+        width: 70%;
+      }
     }
     &-post {
       width: 63%;
