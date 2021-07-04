@@ -8,12 +8,15 @@ A web-app to see and manage employees' department, position and availability. Te
 
 * Set up node & npm (https://www.npmjs.com/get-npm) 
 
-## Project setup
+## Launching the app
+
+At the root of the project :
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+Launch the application : 
 ```
 npm run serve
 ```
@@ -28,5 +31,9 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Firebase 
+
+The project uses a firestore database, which is BaaS document-oriented database.
+
+From the overview of the project, select 'Firestore Database' to manipulate it.
+
