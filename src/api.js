@@ -34,7 +34,7 @@ export default {
         await db.doc('/Employees/' + employeeId).get().then((employee) => {
             employeeData = employee.data();
         })
-        console.log(employeeData)
+        // console.log(employeeData)
         return Promise.resolve(employeeData);
 
 

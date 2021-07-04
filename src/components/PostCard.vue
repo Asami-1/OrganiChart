@@ -82,7 +82,7 @@
     </div>
     <div class="post-candidate">
       <div class="post-candidate-name">
-        <div @click="delCandidate" class="post-candidate-name-del">
+        <div class="post-candidate-name-del">
           <svg
             viewBox="0 0 22 30"
             class="postCard-bot-delete-icon"
@@ -160,68 +160,29 @@ export default {
      */
     async editEmployee() {
       let data = {};
-      data = await VueSimpleAlert.fire({
+      const { value: NewEmployeeId } = await VueSimpleAlert.fire({
         title: 'Affecter un employé',
         text: 'Nom',
         showCancelButton: true,
-        html:
-          '<input id="swal-input1" class="swal2-input" placeholder="Nom">' +
-          '<input id="swal-input2" class="swal2-input" placeholder="Prénom">',
-
-        preConfirm: () => {
-          return {
-            name: `${document.getElementById('swal-input1').value}`,
-            surname: `${document.getElementById('swal-input2').value}`,
-          };
-        },
+        input: 'select',
+        inputOptions: this.employeesOption,
       });
-      data = data.value;
-      const newEmployeeName = data.name.toLowerCase();
-      const newEmployeeSurname = data.surname.toLowerCase();
-
-      // Retrieve arrays of name and surname
-      const employeeNames = this.$store.state.employees.map((employee) => {
-        return employee.name.toLowerCase();
-      });
-      const employeeSurnames = this.$store.state.employees.map((employee) => {
-        return employee.surname.toLowerCase();
-      });
-
-      // Check user input
-      if (
-        employeeSurnames.includes(newEmployeeSurname) &&
-        employeeNames.includes(newEmployeeName)
-      ) {
-        //Retrieve corresponding employee's data
-        let employeeData =
-          this.$store.state.employees[
-            employeeSurnames.indexOf(newEmployeeSurname)
-          ];
-
-        if (this.employee !== undefined) {
-          data = { postId: 'NA', status: 0 };
-          await api.updateEmployee(this.employee.employeeId, data);
-          data = { isOccupied: false };
-          await api.updatePost(this.postId, this.serviceId, data);
-        }
-
-        // Change Service if affected to a new one
-        if (employeeData.serviceId != this.serviceId) {
-          employeeData.serviceId = this.serviceId;
-        }
-
-        // modify data and update
-        employeeData.postName = this.postName;
-        employeeData.postId = this.postId;
-        employeeData.status = 1;
-        await api.updateEmployee(employeeData.employeeId, employeeData);
-        await api.updatePost(this.postId, this.serviceId, {
-          isOccupied: true,
-        });
-        this.$store.dispatch('updateStore');
-      } else {
-        await VueSimpleAlert.confirm("Erreur : L'employé n'existe pas");
+      if (this.employee !== undefined) {
+        data = { postId: 'NA', status: 0 };
+        await api.updateEmployee(this.employee.employeeId, data);
+        data = { isOccupied: false };
+        await api.updatePost(this.postId, this.serviceId, data);
       }
+      await api.updateEmployee(NewEmployeeId, {
+        postId: this.postId,
+        postName: this.postName,
+        serviceId: this.serviceId,
+      });
+      await api.updatePost(this.postId, this.serviceId, {
+        isOccupied: true,
+      });
+
+      this.$store.dispatch('updateStore');
     },
 
     // faire en plus propre si temps il y a
